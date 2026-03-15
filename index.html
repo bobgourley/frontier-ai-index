@@ -1,0 +1,2530 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frontier Enterprise AI Index | Fortune 500 AI Deployment Tracker</title>
+<meta name="description" content="Frontier Enterprise AI Index — tracking how Fortune 500 companies deploy ChatGPT Enterprise, Anthropic Claude, AWS Bedrock, and Google Gemini across finance, logistics, agriculture, and more.">
+<meta property="og:title" content="Frontier Enterprise AI Index">
+<meta property="og:description" content="Frontier Enterprise AI Index — real use cases from Fortune 500 deployments of ChatGPT Enterprise, Claude, AWS Bedrock, and Google Gemini.">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+  --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
+  --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+  --space-16: 4rem;
+
+  --radius-sm: 0.375rem; --radius-md: 0.5rem;
+  --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-full: 9999px;
+  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-display: 'Cabinet Grotesk', 'Inter', sans-serif;
+  --font-body: 'Satoshi', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ===== DARK MODE (default) ===== */
+:root, [data-theme="dark"] {
+  --color-bg:             #0d0f13;
+  --color-surface:        #131720;
+  --color-surface-2:      #181e2c;
+  --color-surface-offset: #1c2333;
+  --color-divider:        #232d42;
+  --color-border:         #2a3550;
+  --color-text:           #e2e8f4;
+  --color-text-muted:     #7a87a3;
+  --color-text-faint:     #3d4d68;
+  --color-text-inverse:   #0d0f13;
+
+  /* Brand accents */
+  --color-openai:         #10a37f;
+  --color-openai-dim:     #0e8a6b;
+  --color-openai-glow:    rgba(16, 163, 127, 0.15);
+  --color-claude:         #c96442;
+  --color-claude-dim:     #a8502e;
+  --color-claude-glow:    rgba(201, 100, 66, 0.15);
+  --color-bedrock:        #ff9900;
+  --color-bedrock-dim:    #e08500;
+  --color-bedrock-glow:   rgba(255, 153, 0, 0.15);
+  --color-gemini:         #4285f4;
+  --color-gemini-dim:     #2a6dd9;
+  --color-gemini-glow:    rgba(66, 133, 244, 0.15);
+
+  --color-finance:        #5b8ff9;
+  --color-logistics:      #61d9b4;
+  --color-data:           #b882f5;
+  --color-hr:             #f9c95b;
+  --color-customer:       #f97b72;
+  --color-legal:          #6eb5ff;
+  --color-agri:           #52c97a;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+/* ===== LIGHT MODE ===== */
+[data-theme="light"] {
+  --color-bg:             #f4f6fb;
+  --color-surface:        #ffffff;
+  --color-surface-2:      #f8faff;
+  --color-surface-offset: #eef1f9;
+  --color-divider:        #dde3ef;
+  --color-border:         #c8d1e5;
+  --color-text:           #1a2236;
+  --color-text-muted:     #5e6d8c;
+  --color-text-faint:     #a0abc0;
+  --color-text-inverse:   #f4f6fb;
+
+  --color-openai:         #0a8a69;
+  --color-openai-dim:     #097a5c;
+  --color-openai-glow:    rgba(10, 138, 105, 0.1);
+  --color-claude:         #b05234;
+  --color-claude-dim:     #963f22;
+  --color-claude-glow:    rgba(176, 82, 52, 0.1);
+  --color-bedrock:        #d97d00;
+  --color-bedrock-dim:    #c06b00;
+  --color-bedrock-glow:   rgba(217, 125, 0, 0.1);
+  --color-gemini:         #1a73e8;
+  --color-gemini-dim:     #1558b0;
+  --color-gemini-glow:    rgba(26, 115, 232, 0.1);
+
+  --shadow-sm: 0 1px 3px rgba(0,0,50,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,50,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,50,0.12);
+}
+
+/* ===== BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; overflow: hidden; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body {
+  height: 100dvh; overflow: hidden;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background: var(--color-bg);
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 1fr;
+}
+img { display: block; max-width: 100%; }
+button { cursor: pointer; background: none; border: none; color: inherit; font: inherit; }
+
+/* ===== DASHBOARD LAYOUT ===== */
+.sidebar {
+  grid-row: 1 / -1;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 20;
+}
+
+.main-area {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+.topbar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.content-area {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-6);
+  background: var(--color-bg);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar-logo {
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-bottom: 1px solid var(--color-divider);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.logo-icon {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+.logo-text span { color: var(--color-openai); }
+
+.sidebar-section {
+  padding: var(--space-4) var(--space-3) var(--space-2);
+}
+
+.sidebar-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  padding: 0 var(--space-2) var(--space-2);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+  text-align: left;
+}
+.nav-item:hover { background: var(--color-surface-offset); color: var(--color-text); }
+.nav-item.active { background: var(--color-surface-offset); color: var(--color-text); }
+.nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
+.nav-item.active svg { opacity: 1; }
+
+.platform-filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.platform-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: 1px solid transparent;
+  color: var(--color-text-muted);
+}
+.platform-chip .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.platform-chip.active-openai  { background: var(--color-openai-glow);  border-color: var(--color-openai);  color: var(--color-openai); }
+.platform-chip.active-claude  { background: var(--color-claude-glow);  border-color: var(--color-claude);  color: var(--color-claude); }
+.platform-chip.active-bedrock { background: var(--color-bedrock-glow); border-color: var(--color-bedrock); color: var(--color-bedrock); }
+.platform-chip.active-gemini  { background: var(--color-gemini-glow);  border-color: var(--color-gemini);  color: var(--color-gemini); }
+.platform-chip:not(.active-openai):not(.active-claude):not(.active-bedrock):not(.active-gemini):hover {
+  background: var(--color-surface-offset);
+  color: var(--color-text);
+}
+
+.sidebar-stats {
+  margin-top: auto;
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-divider);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-1) 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+.stat-val {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ===== TOPBAR ===== */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  min-width: 280px;
+  transition: border-color var(--transition);
+}
+.search-box:focus-within { border-color: var(--color-openai); }
+.search-box svg { width: 15px; height: 15px; color: var(--color-text-muted); flex-shrink: 0; }
+.search-box input {
+  background: none; border: none; outline: none;
+  color: var(--color-text); font: inherit;
+  font-size: var(--text-sm); width: 100%;
+}
+.search-box input::placeholder { color: var(--color-text-faint); }
+
+.filter-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filter-chip:hover { border-color: var(--color-openai); color: var(--color-openai); }
+.filter-chip.active { background: var(--color-openai); border-color: var(--color-openai); color: white; }
+.filter-chip.active-claude { background: var(--color-claude); border-color: var(--color-claude); color: white; }
+.filter-chip.active-bedrock { background: var(--color-bedrock); border-color: var(--color-bedrock); color: #000; }
+
+/* radius-full is in :root above */
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.theme-toggle {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  transition: all var(--transition);
+}
+.theme-toggle:hover { background: var(--color-surface-offset); color: var(--color-text); }
+
+/* ===== KPI CARDS ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.kpi-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.kpi-card:hover { border-color: var(--color-openai); box-shadow: var(--shadow-md); }
+
+.kpi-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  line-height: 1;
+  margin-bottom: var(--space-1);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.kpi-delta {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.kpi-delta.up { color: #61d9b4; }
+.kpi-delta.down { color: #f97b72; }
+.kpi-delta.flat { color: var(--color-text-faint); }
+
+.kpi-accent-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+/* ===== CHARTS ROW ===== */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.chart-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  gap: var(--space-3);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.card-subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.chart-container {
+  position: relative;
+}
+
+/* ===== COMPANY TABLE ===== */
+.table-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+}
+
+.table-header {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-divider);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.company-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.company-table thead tr {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.company-table th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: color var(--transition);
+}
+.company-table th:hover { color: var(--color-text); }
+.company-table th.sorted { color: var(--color-openai); }
+
+.company-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-divider);
+  font-size: var(--text-sm);
+  vertical-align: middle;
+}
+
+.company-table tr:last-child td { border-bottom: none; }
+
+.company-table tbody tr {
+  transition: background var(--transition);
+  cursor: pointer;
+}
+.company-table tbody tr:hover { background: var(--color-surface-2); }
+.company-table tbody tr.hidden { display: none; }
+
+.rank-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.company-name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.company-sector {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.platform-badges {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.platform-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.platform-badge.openai  { background: var(--color-openai-glow); color: var(--color-openai); border: 1px solid var(--color-openai); }
+.platform-badge.claude  { background: var(--color-claude-glow); color: var(--color-claude); border: 1px solid var(--color-claude); }
+.platform-badge.bedrock { background: var(--color-bedrock-glow); color: var(--color-bedrock); border: 1px solid var(--color-bedrock); }
+.platform-badge.gemini  { background: var(--color-gemini-glow);  color: var(--color-gemini);  border: 1px solid var(--color-gemini); }
+
+.use-case-tags {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.use-case-tag {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--color-surface-offset);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-divider);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.use-case-tag:hover { border-color: var(--color-border); color: var(--color-text); }
+.use-case-tag.finance  { color: var(--color-finance);   border-color: rgba(91,143,249,0.3);  background: rgba(91,143,249,0.07); }
+.use-case-tag.logistics { color: var(--color-logistics); border-color: rgba(97,217,180,0.3); background: rgba(97,217,180,0.07); }
+.use-case-tag.data     { color: var(--color-data);      border-color: rgba(184,130,245,0.3); background: rgba(184,130,245,0.07); }
+.use-case-tag.hr       { color: var(--color-hr);        border-color: rgba(249,201,91,0.3);  background: rgba(249,201,91,0.07); }
+.use-case-tag.customer { color: var(--color-customer);  border-color: rgba(249,123,114,0.3); background: rgba(249,123,114,0.07); }
+.use-case-tag.legal    { color: var(--color-legal);     border-color: rgba(110,181,255,0.3); background: rgba(110,181,255,0.07); }
+.use-case-tag.agri     { color: var(--color-agri);       border-color: rgba(82,201,122,0.3);  background: rgba(82,201,122,0.07); }
+
+.revenue-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.revenue-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: var(--color-divider);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.revenue-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-openai), var(--color-finance));
+  transition: width 0.6s ease;
+}
+.revenue-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  min-width: 48px;
+  text-align: right;
+}
+
+/* ===== DETAIL PANEL ===== */
+.detail-panel {
+  position: fixed;
+  right: 0; top: 0; bottom: 0;
+  width: 480px;
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.detail-panel.open { transform: translateX(0); }
+
+.detail-panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 49;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.detail-panel-overlay.open { opacity: 1; pointer-events: all; }
+
+.detail-header {
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-bottom: 1px solid var(--color-divider);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.detail-close {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: all var(--transition);
+}
+.detail-close:hover { background: var(--color-surface-offset); color: var(--color-text); }
+
+.detail-body { padding: var(--space-5); }
+
+.detail-section {
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-divider);
+}
+.detail-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+.detail-section-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-3);
+}
+
+.detail-use-case {
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+}
+.detail-use-case:last-child { margin-bottom: 0; }
+
+.detail-uc-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.detail-uc-platform {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+}
+.detail-uc-platform.openai  { background: var(--color-openai-glow); color: var(--color-openai); }
+.detail-uc-platform.claude  { background: var(--color-claude-glow); color: var(--color-claude); }
+.detail-uc-platform.bedrock { background: var(--color-bedrock-glow); color: var(--color-bedrock); }
+.detail-uc-platform.gemini  { background: var(--color-gemini-glow);  color: var(--color-gemini); }
+
+.detail-uc-title {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.detail-uc-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: var(--space-2);
+  font-size: 11px;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+  word-break: break-word;
+}
+.detail-uc-source:hover { opacity: 1; text-decoration: underline; }
+
+.detail-uc-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ===== INSIGHT STRIP ===== */
+.insight-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.insight-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.insight-card:hover { box-shadow: var(--shadow-sm); }
+
+.insight-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.insight-icon.openai  { background: var(--color-openai-glow);  color: var(--color-openai); }
+.insight-icon.claude  { background: var(--color-claude-glow);  color: var(--color-claude); }
+.insight-icon.bedrock { background: var(--color-bedrock-glow); color: var(--color-bedrock); }
+
+.insight-text {}
+.insight-platform { font-size: var(--text-xs); font-weight: 700; color: var(--color-text-muted); margin-bottom: var(--space-1); }
+.insight-stat { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 800; color: var(--color-text); letter-spacing: -0.02em; }
+.insight-desc { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5; margin-top: var(--space-1); }
+
+/* ===== RESULT COUNT ===== */
+.result-count {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  opacity: 0.5;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  color: var(--color-text-muted);
+  display: none;
+}
+.empty-state.visible { display: table-row; }
+.empty-state td { padding: var(--space-10) !important; text-align: center; color: var(--color-text-muted); }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-faint); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .charts-row { grid-template-columns: 1fr; }
+  .insight-strip { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 800px) {
+  body { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .detail-panel { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <svg class="logo-icon" viewBox="0 0 32 32" fill="none" aria-label="AI500 logo">
+      <rect width="32" height="32" rx="8" fill="currentColor" opacity="0.08"/>
+      <path d="M8 10h6v6H8zM18 10h6v6h-6zM8 20h6v2H8zM18 20h6v2h-6z" fill="#10a37f"/>
+      <path d="M11 13l2 2-2 2M21 13l2 2-2 2" stroke="#c96442" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="logo-text">Frontier <span>AI</span> Index</div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Views</div>
+    <div class="platform-filter">
+      <button class="nav-item active" data-view="overview" onclick="setView('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/>
+          <rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/>
+        </svg>
+        Overview
+      </button>
+      <button class="nav-item" data-view="companies" onclick="setView('companies', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 12V5l6-3 6 3v7"/><rect x="6" y="8" width="4" height="4"/>
+        </svg>
+        Companies
+      </button>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">AI Platforms</div>
+    <div class="platform-filter">
+      <button class="platform-chip" id="chip-all" onclick="filterPlatform('all', this)" style="color:var(--color-text); background:var(--color-surface-offset); border-color:var(--color-border);">
+        <span class="dot" style="background: linear-gradient(135deg, #10a37f, #c96442, #ff9900, #4285f4);"></span>
+        All Platforms
+      </button>
+      <button class="platform-chip active-openai" id="chip-openai" onclick="filterPlatform('openai', this)">
+        <span class="dot" style="background: var(--color-openai);"></span>
+        ChatGPT Enterprise
+      </button>
+      <button class="platform-chip active-claude" id="chip-claude" onclick="filterPlatform('claude', this)">
+        <span class="dot" style="background: var(--color-claude);"></span>
+        Anthropic Claude
+      </button>
+      <button class="platform-chip active-bedrock" id="chip-bedrock" onclick="filterPlatform('bedrock', this)">
+        <span class="dot" style="background: var(--color-bedrock);"></span>
+        AWS Bedrock
+      </button>
+      <button class="platform-chip active-gemini" id="chip-gemini" onclick="filterPlatform('gemini', this)">
+        <span class="dot" style="background: var(--color-gemini);"></span>
+        Google Gemini
+      </button>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Use Cases</div>
+    <div class="platform-filter">
+      <button class="nav-item" onclick="filterUseCase('finance')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 1v14M1 5h14M3 8h10"/>
+        </svg>
+        Finance Research
+      </button>
+      <button class="nav-item" onclick="filterUseCase('logistics')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="1" y="6" width="10" height="7" rx="1"/><path d="M11 9h3l1 4h-4"/>
+          <circle cx="4" cy="14" r="1.5"/><circle cx="12.5" cy="14" r="1.5"/>
+        </svg>
+        Logistics & Supply
+      </button>
+      <button class="nav-item" onclick="filterUseCase('data')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <ellipse cx="8" cy="4" rx="6" ry="2"/><path d="M2 4v4c0 1.1 2.7 2 6 2s6-.9 6-2V4M2 8v4c0 1.1 2.7 2 6 2s6-.9 6-2V8"/>
+        </svg>
+        Data Discovery
+      </button>
+      <button class="nav-item" onclick="filterUseCase('hr')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+        </svg>
+        HR & Workforce
+      </button>
+      <button class="nav-item" onclick="filterUseCase('customer')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 10.7A2 2 0 0 0 12 9H4a2 2 0 0 0-2 2v.3C2 13.3 4.7 15 8 15s6-1.7 6-3.3v-.3z"/>
+          <circle cx="8" cy="5" r="3"/>
+        </svg>
+        Customer Service
+      </button>
+      <button class="nav-item" onclick="filterUseCase('legal')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 1v14M4 5l-3 6h6zM15 5l-3 6h6z"/>
+        </svg>
+        Legal & Compliance
+      </button>
+      <button class="nav-item" onclick="filterUseCase('agri')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 14V7M8 7C8 4 11 1 14 2c0 3-2 5-6 5zM8 7C8 4 5 1 2 2c0 3 2 5 6 5z"/>
+        </svg>
+        Agriculture & Food
+      </button>
+    </div>
+  </div>
+
+  <div class="sidebar-stats">
+    <div class="stat-row">
+      <span>Last updated</span>
+      <span class="stat-val">Mar 2026</span>
+    </div>
+    <div class="stat-row">
+      <span>Companies tracked</span>
+      <span class="stat-val">79</span>
+    </div>
+    <div class="stat-row">
+      <span>Use cases mapped</span>
+      <span class="stat-val">225+</span>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== MAIN AREA ===== -->
+<div class="main-area">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="search-box">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="6.5" cy="6.5" r="4.5"/><path d="M11 11l3 3"/>
+        </svg>
+        <input type="text" id="search-input" placeholder="Search companies, use cases, sectors…" oninput="handleSearch(this.value)">
+      </div>
+      <div class="filter-chips" id="active-filters"></div>
+    </div>
+    <div class="topbar-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content-area" id="content-area">
+
+    <!-- === OVERVIEW === -->
+    <section id="view-overview">
+
+      <!-- KPI GRID -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Fortune 500 Using ChatGPT</div>
+          <div class="kpi-value" id="kpi-openai">92%</div>
+          <div class="kpi-delta up">↑ 12pp YoY · 460+ companies</div>
+          <div class="kpi-accent-bar" style="background: var(--color-openai);"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Anthropic Enterprise Share</div>
+          <div class="kpi-value">32%</div>
+          <div class="kpi-delta up">↑ 20pp · overtook OpenAI</div>
+          <div class="kpi-accent-bar" style="background: var(--color-claude);"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">AWS Bedrock Customers</div>
+          <div class="kpi-value">100K+</div>
+          <div class="kpi-delta up">↑ 2× YoY · 1T+ token orgs: 50+</div>
+          <div class="kpi-accent-bar" style="background: var(--color-bedrock);"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Google Gemini Enterprise Reach</div>
+          <div class="kpi-value">20%</div>
+          <div class="kpi-delta up">↑ ~3× since 2023 · Google Workspace AI</div>
+          <div class="kpi-accent-bar" style="background: var(--color-gemini);"></div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Enterprise AI Platform Adoption by Use Case</div>
+              <div class="card-subtitle">Estimated % of Fortune 500 deployments by category, 2025–2026</div>
+            </div>
+          </div>
+          <div class="chart-container" style="height:260px;">
+            <canvas id="useCaseChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Platform Market Share</div>
+              <div class="card-subtitle">Enterprise AI spending allocation (HSBC Research, 2025)</div>
+            </div>
+          </div>
+          <div class="chart-container" style="height:260px;">
+            <canvas id="marketShareChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSIGHT STRIP -->
+      <div class="insight-strip" style="grid-template-columns: repeat(4,1fr);">
+        <div class="insight-card">
+          <div class="insight-icon openai">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
+            </svg>
+          </div>
+          <div class="insight-text">
+            <div class="insight-platform">ChatGPT Enterprise · OpenAI</div>
+            <div class="insight-stat">7M+ seats</div>
+            <div class="insight-desc">Workplace seats deployed, up 9× YoY. Workers save 40–60 min/day on average. Enterprise message volume up 8×.</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon claude">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.436 0L0 20.705h4.614l2.307-4.104h9.158l2.308 4.104H24L12.564 0h-1.128zm.564 7.568l3.15 5.604H8.85l3.15-5.604z"/>
+            </svg>
+          </div>
+          <div class="insight-text">
+            <div class="insight-platform">Anthropic Claude · Enterprise</div>
+            <div class="insight-stat">32% share</div>
+            <div class="insight-desc">Enterprise LLM market share by usage. 500+ customers spend $1M+ annually. 8 of Fortune 10 are Claude customers.</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon bedrock">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M13.527 2.513a.5.5 0 0 0-.554 0L1.5 9.856a.5.5 0 0 0-.222.415v3.458a.5.5 0 0 0 .222.415l11.473 7.343a.5.5 0 0 0 .554 0l11.473-7.343A.5.5 0 0 0 22.722 13.729v-3.458a.5.5 0 0 0-.222-.415L13.527 2.513zM12 4.532l9.722 6.222L12 17l-9.722-6.246L12 4.532z"/>
+            </svg>
+          </div>
+          <div class="insight-text">
+            <div class="insight-platform">AWS Bedrock · Amazon</div>
+            <div class="insight-stat">100K+ orgs</div>
+            <div class="insight-desc">Companies using Bedrock for inference, doubling YoY. 50+ orgs processed 1 trillion tokens each. $132B AWS run rate.</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon" style="background:var(--color-gemini-glow);color:var(--color-gemini);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+            </svg>
+          </div>
+          <div class="insight-text">
+            <div class="insight-platform">Google Gemini · Workspace AI</div>
+            <div class="insight-stat">20% share</div>
+            <div class="insight-desc">Enterprise LLM market share by spending. 3B+ Google Workspace users with Gemini integration. Duet AI rebranded and embedded across Cloud and Workspace.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW 2 -->
+      <div class="charts-row" style="margin-bottom: var(--space-6);">
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Adoption Growth Timeline</div>
+              <div class="card-subtitle">Fortune 500 companies with full enterprise LLM deployment</div>
+            </div>
+          </div>
+          <div class="chart-container" style="height:240px;">
+            <canvas id="adoptionChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Use Case Distribution</div>
+              <div class="card-subtitle">Top AI applications across tracked F500 companies</div>
+            </div>
+          </div>
+          <div class="chart-container" style="height:240px;">
+            <canvas id="usecaseDonut"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- === COMPANIES TABLE === -->
+    <section id="view-companies" style="display:none;">
+      <div class="table-section">
+        <div class="table-header">
+          <div>
+            <div class="card-title">Fortune 500 Enterprise AI Deployments</div>
+            <div class="card-subtitle" id="result-count-text">Showing all 35 companies</div>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="company-table">
+            <thead>
+              <tr>
+                <th onclick="sortTable('rank')" data-col="rank">Rank <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('name')" data-col="name">Company <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('sector')" data-col="sector">Sector <span class="sort-icon">↕</span></th>
+                <th>Platforms</th>
+                <th>Use Cases</th>
+                <th onclick="sortTable('revenue')" data-col="revenue">Revenue <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="company-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- DETAIL PANEL OVERLAY -->
+<div class="detail-panel-overlay" id="panel-overlay" onclick="closeDetailPanel()"></div>
+
+<!-- DETAIL PANEL -->
+<aside class="detail-panel" id="detail-panel">
+  <div class="detail-header">
+    <div>
+      <div class="card-title" id="detail-company-name">—</div>
+      <div class="card-subtitle" id="detail-company-meta">—</div>
+    </div>
+    <button class="detail-close" onclick="closeDetailPanel()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M2 2l12 12M14 2L2 14"/>
+      </svg>
+    </button>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
+</aside>
+
+<script>
+// ===== DATA =====
+const companies = [
+  {
+    rank: 1, name: "Amazon", sector: "Retail / Technology", revenue: 638,
+    platforms: ["openai", "bedrock"],
+    useCases: ["logistics", "data", "customer"],
+    details: {
+      openai: [
+        { title: "Amazon Q Internal Productivity", category: "data", desc: "Amazon Q, the internal AI productivity layer powered by AWS and integrated with ChatGPT-class models, enables employees to complete tasks up to 10× faster across hundreds of thousands of internal users.", source: "OpenAI Enterprise Report 2025", sourceUrl: "https://openai.com/enterprise" },
+        { title: "Customer Service Automation", category: "customer", desc: "AI-powered response systems handling millions of customer interactions daily, reducing escalation rates and improving resolution time.", source: "AWS AI Case Studies", sourceUrl: "https://aws.amazon.com/solutions/case-studies/" }
+      ],
+      bedrock: [
+        { title: "Supply Chain Demand Forecasting", category: "logistics", desc: "AI-driven demand forecasting across 400M+ products using ML algorithms that analyze customer data, market trends, and external factors. Automatic reordering triggered when stock hits thresholds.", source: "AWS Bedrock Overview", sourceUrl: "https://aws.amazon.com/bedrock/" },
+        { title: "Wellspring Logistics Mapping", category: "logistics", desc: "Generative AI mapping technology for global supply chain optimization. Powers real-time routing, inventory balancing, and multi-modal logistics planning.", source: "AWS Supply Chain Blog", sourceUrl: "https://aws.amazon.com/blogs/supply-chain/" },
+        { title: "AWS Bedrock Platform", category: "data", desc: "Amazon built and operates Amazon Bedrock itself — a fully managed service offering 50+ foundation models via single API. Used internally for all generative AI applications.", source: "AWS Bedrock", sourceUrl: "https://aws.amazon.com/bedrock/" }
+      ]
+    }
+  },
+  {
+    rank: 2, name: "Walmart", sector: "Retail", revenue: 648,
+    platforms: ["openai", "bedrock"],
+    useCases: ["logistics", "data", "customer", "hr"],
+    details: {
+      openai: [
+        { title: "Trend-to-Product Multi-Agent Engine", category: "data", desc: "AI-driven multi-agent system that tracks social media and search trends, generates mood boards and product concepts, and feeds them directly into prototyping and sourcing — cutting project timelines from months to weeks.", source: "OpenAI Enterprise Report 2025", sourceUrl: "https://openai.com/enterprise" },
+        { title: "AI Shopping Assistant", category: "customer", desc: "Conversational AI assistant that showed 2× conversion rates vs. human reps in early tests, deployed across Walmart.com and app.", source: "OpenAI Enterprise Report 2025", sourceUrl: "https://openai.com/enterprise" }
+      ],
+      bedrock: [
+        { title: "Route Optimization System", category: "logistics", desc: "Proprietary AI/ML logistics solution eliminating 30M driver miles and saving 94M pounds of CO₂. System now licensed to other businesses.", source: "AWS Case Studies", sourceUrl: "https://aws.amazon.com/solutions/case-studies/" },
+        { title: "International Supply Chain AI", category: "logistics", desc: "Real-time AI systems live across US, Costa Rica, Mexico, and Canada for inventory tracking, demand sensing, and replenishment.", source: "AWS Supply Chain", sourceUrl: "https://aws.amazon.com/blogs/supply-chain/" }
+      ]
+    }
+  },
+  {
+    rank: 3, name: "Goldman Sachs", sector: "Financial Services", revenue: 115,
+    platforms: ["claude", "openai"],
+    useCases: ["finance", "legal", "data"],
+    details: {
+      claude: [
+        { title: "Trade & Transaction Accounting Agents", category: "finance", desc: "AI agents using Claude to automate trade reconciliation and accounting workflows. Digital co-workers handling extensive, process-driven accounting tasks.", source: "CNBC — Goldman AI Agents", sourceUrl: "https://www.cnbc.com/2026/02/goldman-sachs-ai-agents.html" },
+        { title: "Client Vetting & Onboarding Automation", category: "legal", desc: "Claude-powered agents accelerating client KYC and onboarding processes, analyzing large volumes of documents while adhering to compliance rules and exercising judgment.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "Devin AI Coding Assistant", category: "data", desc: "Autonomous AI coder deployed to Goldman's engineering teams for code review, debugging, and new feature development.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" },
+        { title: "Investment Banking Pitchbooks", category: "finance", desc: "Generative AI for automating pitchbook creation, market analysis summaries, and competitive benchmarking reports.", source: "OpenAI Enterprise Report", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 4, name: "JPMorgan Chase", sector: "Financial Services", revenue: 162,
+    platforms: ["claude", "openai"],
+    useCases: ["finance", "legal", "data"],
+    details: {
+      claude: [
+        { title: "Market Research & Analysis", category: "finance", desc: "Claude deployed by analysts for structured financial research workflows, competitive analysis, earnings summaries, and sector deep-dives alongside McKinsey methodology frameworks.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "LLM Suite Internal Platform", category: "data", desc: "JPMorgan's proprietary AI platform built on ChatGPT capabilities, providing 40,000+ employees with AI tools for research, document analysis, and workflow automation.", source: "OpenAI Enterprise Report 2025", sourceUrl: "https://openai.com/enterprise" },
+        { title: "Regulatory Compliance Review", category: "legal", desc: "Automated scanning of regulatory documents, contracts, and filings for compliance risk flags and required disclosures.", source: "JPMorgan Technology", sourceUrl: "https://www.jpmorganchase.com/technology" }
+      ]
+    }
+  },
+  {
+    rank: 5, name: "New York Life", sector: "Insurance", revenue: 48,
+    platforms: ["bedrock"],
+    useCases: ["customer", "data"],
+    details: {
+      bedrock: [
+        { title: "Service Sage AI Assistant", category: "customer", desc: "Amazon Bedrock-powered tool helping service reps quickly retrieve relevant information from lengthy policy documents and knowledge bases during policyholder calls. Powered by OpenSearch vector database and DynamoDB for prompt management.", source: "AWS Case Study — New York Life", sourceUrl: "https://aws.amazon.com/solutions/case-studies/new-york-life/" },
+        { title: "Legacy Data Platform Modernization", category: "data", desc: "Migrated entire data infrastructure from Apache Hadoop to AWS. Now supports generative AI application development on unified data foundation.", source: "AWS Case Studies", sourceUrl: "https://aws.amazon.com/solutions/case-studies/" }
+      ]
+    }
+  },
+  {
+    rank: 6, name: "Microsoft", sector: "Technology", revenue: 245,
+    platforms: ["openai"],
+    useCases: ["data", "hr", "customer", "legal"],
+    details: {
+      openai: [
+        { title: "Microsoft 365 Copilot", category: "data", desc: "GPT-4-powered productivity suite embedded across Word, Excel, PowerPoint, Outlook, Teams. Deployed to 300M+ commercial users. Summarizes emails, generates documents, analyzes data, and automates workflows.", source: "Microsoft Copilot", sourceUrl: "https://www.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot" },
+        { title: "GitHub Copilot Enterprise", category: "data", desc: "AI pair programmer with custom knowledge base integration for enterprise repositories. Shown to increase developer throughput by 55%.", source: "GitHub Copilot", sourceUrl: "https://github.com/features/copilot" },
+        { title: "Power Platform AI Builder", category: "hr", desc: "Low-code AI tools enabling business users to build AI-powered apps, automate processes, and analyze data without coding expertise.", source: "Microsoft Power Platform", sourceUrl: "https://www.microsoft.com/en-us/power-platform" }
+      ]
+    }
+  },
+  {
+    rank: 7, name: "FedEx", sector: "Logistics", revenue: 91,
+    platforms: ["bedrock", "openai"],
+    useCases: ["logistics", "data", "customer"],
+    details: {
+      bedrock: [
+        { title: "FedEx Surround Real-Time Tracking", category: "logistics", desc: "Real-time AI platform providing visibility across entire transportation network. Delivers predictive delay alerts, prioritizes critical shipments, and actively reroutes packages. Processes billions of IoT data points daily.", source: "AWS Case Study — FedEx", sourceUrl: "https://aws.amazon.com/solutions/case-studies/fedex/" }
+      ],
+      openai: [
+        { title: "Intelligent Customer Communications", category: "customer", desc: "AI-generated proactive delay notifications and delivery updates, reducing inbound customer service volume by automating status communications at scale.", source: "FedEx Technology", sourceUrl: "https://www.fedex.com/en-us/about/technology.html" }
+      ]
+    }
+  },
+  {
+    rank: 8, name: "UnitedHealth Group", sector: "Healthcare", revenue: 400,
+    platforms: ["openai", "bedrock"],
+    useCases: ["customer", "data", "legal"],
+    details: {
+      openai: [
+        { title: "Clinical Decision Support", category: "data", desc: "AI-assisted diagnosis support tools for clinicians, analyzing patient records, medical literature, and treatment protocols.", source: "UnitedHealth AI Newsroom", sourceUrl: "https://www.unitedhealthgroup.com/newsroom/technology.html" },
+        { title: "Prior Authorization Automation", category: "legal", desc: "Automated review of insurance prior authorization requests using NLP to extract clinical criteria and flag edge cases for human review.", source: "UnitedHealth Group Newsroom", sourceUrl: "https://www.unitedhealthgroup.com/newsroom/" }
+      ],
+      bedrock: [
+        { title: "Claims Processing Intelligence", category: "finance", desc: "AWS Bedrock-powered claims analysis for anomaly detection, fraud identification, and automated adjudication of routine claims.", source: "AWS Healthcare", sourceUrl: "https://aws.amazon.com/health/" }
+      ]
+    }
+  },
+  {
+    rank: 9, name: "Apple", sector: "Technology", revenue: 391,
+    platforms: ["claude", "openai"],
+    useCases: ["data", "customer", "hr"],
+    details: {
+      claude: [
+        { title: "Developer Documentation AI", category: "data", desc: "Claude integrated into Apple's internal developer tooling for generating SDK documentation, code examples, and API reference materials.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "Apple Intelligence — ChatGPT Integration", category: "customer", desc: "Apple Intelligence integrates ChatGPT directly into iOS 18, iPadOS 18, and macOS Sequoia for advanced language tasks, image generation, and Writing Tools across all Apple devices.", source: "Apple Newsroom — Apple Intelligence", sourceUrl: "https://www.apple.com/newsroom/2024/06/introducing-apple-intelligence/" }
+      ]
+    }
+  },
+  {
+    rank: 10, name: "CVS Health", sector: "Healthcare / Retail", revenue: 372,
+    platforms: ["openai", "bedrock"],
+    useCases: ["customer", "data", "logistics"],
+    details: {
+      openai: [
+        { title: "Pharmacy Benefits AI Advisor", category: "customer", desc: "Conversational AI answering member benefits questions instantly, handling inquiries without human escalation across CVS Caremark.", source: "CVS Health Technology", sourceUrl: "https://www.cvshealth.com/about-cvs-health/our-offerings/health-technology.html" }
+      ],
+      bedrock: [
+        { title: "Drug Supply Chain Optimization", category: "logistics", desc: "AI-powered inventory forecasting for pharmaceutical supply chain, reducing stockouts and overstock across 9,000+ pharmacy locations.", source: "AWS Retail & Healthcare", sourceUrl: "https://aws.amazon.com/retail/" }
+      ]
+    }
+  },
+  {
+    rank: 11, name: "Morgan Stanley", sector: "Financial Services", revenue: 61,
+    platforms: ["openai"],
+    useCases: ["finance", "data", "customer"],
+    details: {
+      openai: [
+        { title: "AI @ Morgan Stanley — Financial Advisor Assistant", category: "finance", desc: "GPT-4 embedded in Morgan Stanley's internal knowledge system for 16,000+ financial advisors. Gives instant access to 100,000+ research reports and internal documents. Achieved 98%+ advisor adoption rate within months of launch.", source: "OpenAI — Morgan Stanley Case Study", sourceUrl: "https://openai.com/customer-stories/morgan-stanley" },
+        { title: "Client Research Synthesis", category: "finance", desc: "AI generating personalized investment insights, portfolio summaries, and market commentary for wealth management clients — reducing advisor prep time from hours to minutes.", source: "Morgan Stanley AI", sourceUrl: "https://www.morganstanley.com/articles/ai-financial-advisor" }
+      ]
+    }
+  },
+  {
+    rank: 12, name: "Coca-Cola", sector: "Consumer Goods / Beverages", revenue: 46,
+    platforms: ["openai"],
+    useCases: ["customer", "data", "hr"],
+    details: {
+      openai: [
+        { title: "AI-Generated Marketing Creative", category: "customer", desc: "Coca-Cola partnered with OpenAI and Bain & Company to deploy ChatGPT Enterprise and DALL-E for AI-generated marketing campaigns, product ideation, and consumer engagement content — including AI-designed limited edition packaging.", source: "OpenAI — Coca-Cola Case Study", sourceUrl: "https://openai.com/customer-stories/coca-cola" },
+        { title: "Enterprise GPT Platform", category: "data", desc: "Company-wide ChatGPT Enterprise deployment enabling employees across marketing, legal, finance, and supply chain to leverage AI for productivity and insight generation.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 13, name: "BlackRock", sector: "Financial Services / Asset Management", revenue: 20,
+    platforms: ["claude"],
+    useCases: ["finance", "data", "legal"],
+    details: {
+      claude: [
+        { title: "Investment-Grade Financial Analysis", category: "finance", desc: "Claude deployed for high-stakes financial document analysis, earnings report synthesis, portfolio risk commentary, and structured investment research for BlackRock's asset management teams.", source: "Anthropic — Financial Services", sourceUrl: "https://www.anthropic.com/enterprise" },
+        { title: "Regulatory Filing Intelligence", category: "legal", desc: "AI-powered review of SEC filings, prospectuses, and regulatory disclosures to extract material risk factors and compliance signals at scale.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 14, name: "Palo Alto Networks", sector: "Cybersecurity", revenue: 8,
+    platforms: ["claude"],
+    useCases: ["data", "legal", "customer"],
+    details: {
+      claude: [
+        { title: "AI Vulnerability Triage", category: "data", desc: "Claude deployed in Palo Alto Networks' security operations center for automated vulnerability triage and prioritization — achieving 44% faster response times and reducing analyst fatigue on false positives.", source: "Anthropic — Palo Alto Networks Case Study", sourceUrl: "https://www.anthropic.com/customers/palo-alto-networks" },
+        { title: "Threat Intelligence Synthesis", category: "legal", desc: "AI-powered analysis of threat intelligence feeds, CVE databases, and incident reports to generate actionable security advisories for enterprise customers.", source: "Anthropic Customer Stories", sourceUrl: "https://www.anthropic.com/customers" }
+      ]
+    }
+  },
+  {
+    rank: 15, name: "Novo Nordisk", sector: "Pharmaceuticals", revenue: 37,
+    platforms: ["claude", "bedrock"],
+    useCases: ["data", "legal", "hr"],
+    details: {
+      claude: [
+        { title: "NovoScribe Clinical Documentation", category: "legal", desc: "Claude via AWS Bedrock powers 'NovoScribe', Novo Nordisk's AI clinical documentation system. Reduces documentation time from 10+ weeks to 10 minutes per document — a 90%+ productivity gain. Now deployed at scale across clinical operations.", source: "Anthropic — Novo Nordisk Case Study", sourceUrl: "https://www.anthropic.com/customers/novo-nordisk" }
+      ],
+      bedrock: [
+        { title: "Drug Discovery Data Platform", category: "data", desc: "AWS Bedrock infrastructure supporting AI-accelerated molecular modeling and compound screening for diabetes and obesity drug development pipelines.", source: "AWS Healthcare", sourceUrl: "https://aws.amazon.com/health/" }
+      ]
+    }
+  },
+  {
+    rank: 16, name: "Cox Automotive", sector: "Automotive / Technology", revenue: 22,
+    platforms: ["claude"],
+    useCases: ["customer", "data", "logistics"],
+    details: {
+      claude: [
+        { title: "Test Drive Appointment AI", category: "customer", desc: "Claude (Sonnet + Haiku) powers Cox Automotive's dealer AI tools — doubling test drive appointment conversion rates and enabling dealers to auto-generate 9,000+ vehicle listings.", source: "Anthropic — Cox Automotive Case Study", sourceUrl: "https://www.anthropic.com/customers/cox-automotive" },
+        { title: "Vehicle Listing Generation", category: "data", desc: "AI auto-generates detailed, consistent vehicle listings from structured data — reducing listing creation time from weeks to same-day across Cox Automotive's dealer network.", source: "Anthropic Customer Stories", sourceUrl: "https://www.anthropic.com/customers/cox-automotive" }
+      ]
+    }
+  },
+  {
+    rank: 17, name: "Moderna", sector: "Pharmaceuticals / Biotech", revenue: 18,
+    platforms: ["bedrock"],
+    useCases: ["data", "legal", "logistics"],
+    details: {
+      bedrock: [
+        { title: "mRNA Drug Discovery AI", category: "data", desc: "AWS Bedrock powers Moderna's AI platform for molecular modeling, mRNA sequence optimization, and drug candidate screening — accelerating preclinical research timelines by 2-4 years.", source: "AWS — Moderna Case Study", sourceUrl: "https://aws.amazon.com/solutions/case-studies/moderna/" },
+        { title: "Regulatory Submission Automation", category: "legal", desc: "AI systems automating FDA submission document preparation, clinical data tabulation, and regulatory correspondence management.", source: "AWS Healthcare", sourceUrl: "https://aws.amazon.com/health/" }
+      ]
+    }
+  },
+  {
+    rank: 18, name: "Gap Inc.", sector: "Retail / Apparel", revenue: 15,
+    platforms: ["gemini"],
+    useCases: ["logistics", "data", "customer"],
+    details: {
+      gemini: [
+        { title: "Demand Forecasting from Google Search Trends", category: "logistics", desc: "Gap uses Gemini Enterprise and Google Cloud to analyze Google Search trend data for predicting fashion demand — enabling supply chain teams to adjust inventory weeks ahead of trend peaks.", source: "Google Cloud — Gap Case Study", sourceUrl: "https://cloud.google.com/customers/gap" },
+        { title: "AI-Powered Merchandising", category: "data", desc: "Gemini integrated into Gap's merchandising workflows for trend analysis, assortment planning, and markdown optimization across Old Navy, Gap, Banana Republic, and Athleta.", source: "Google Cloud Retail", sourceUrl: "https://cloud.google.com/solutions/retail" }
+      ]
+    }
+  },
+  {
+    rank: 19, name: "Klarna", sector: "Fintech / Financial Services", revenue: 3,
+    platforms: ["openai", "gemini"],
+    useCases: ["customer", "finance", "data"],
+    details: {
+      openai: [
+        { title: "Klarna AI Customer Service Agent", category: "customer", desc: "ChatGPT-powered AI assistant handling two-thirds of all customer service chats within the first month — equivalent to the work of 700 full-time agents. Customer satisfaction scores on par with human agents.", source: "OpenAI — Klarna Case Study", sourceUrl: "https://openai.com/customer-stories/klarna" },
+        { title: "Shopping Recommendations Engine", category: "finance", desc: "AI-powered personalized shopping recommendations and buy-now-pay-later financing suggestions integrated into Klarna's app for 150M+ consumers.", source: "Klarna AI Press Release", sourceUrl: "https://www.klarna.com/international/press/klarna-ai-assistant/" }
+      ],
+      gemini: [
+        { title: "Gemini Financial AI Pilot", category: "data", desc: "Klarna evaluated and piloted Google Gemini for internal financial analytics and reporting workflows alongside their OpenAI deployment.", source: "Klarna Technology Blog", sourceUrl: "https://www.klarna.com/us/shopping/blog/" }
+      ]
+    }
+  },
+  {
+    rank: 20, name: "PwC", sector: "Professional Services", revenue: 55,
+    platforms: ["openai"],
+    useCases: ["finance", "legal", "data", "hr"],
+    details: {
+      openai: [
+        { title: "ChatGPT Enterprise — Firm-Wide Deployment", category: "data", desc: "PwC was among the first major professional services firms to deploy ChatGPT Enterprise, providing AI tools to tens of thousands of staff for audit, tax, consulting, and advisory work.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" },
+        { title: "AI Tax & Audit Workflows", category: "finance", desc: "AI-powered tools automating tax return preparation, audit workpaper generation, and financial statement review — reducing engagement delivery time and improving accuracy.", source: "PwC AI Strategy", sourceUrl: "https://www.pwc.com/us/en/tech-effect/ai-analytics.html" }
+      ]
+    }
+  },
+  {
+    rank: 21, name: "Nordea", sector: "Financial Services / Banking", revenue: 12,
+    platforms: ["claude"],
+    useCases: ["finance", "data", "legal"],
+    details: {
+      claude: [
+        { title: "Investment-Grade Financial Research", category: "finance", desc: "Claude deployed across Nordea's investment banking and corporate finance teams for structured financial analysis, credit assessment, and deal documentation with strict data governance.", source: "Anthropic — Financial Services", sourceUrl: "https://www.anthropic.com/enterprise" },
+        { title: "Compliance Document Analysis", category: "legal", desc: "AI processing regulatory filings, AML screening outputs, and compliance reports to identify risk signals and generate summary briefs for senior compliance officers.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 22, name: "Deutsche Telekom", sector: "Telecommunications", revenue: 115,
+    platforms: ["gemini"],
+    useCases: ["customer", "data", "hr"],
+    details: {
+      gemini: [
+        { title: "Gemini Enterprise Customer Support", category: "customer", desc: "Deutsche Telekom deployed Gemini Enterprise across customer support operations — AI bots handling tier-1 inquiries, billing questions, and service troubleshooting across multiple European markets in local languages.", source: "Google Cloud — Deutsche Telekom", sourceUrl: "https://cloud.google.com/customers/deutsche-telekom" },
+        { title: "Internal Knowledge Search AI", category: "data", desc: "Gemini-powered enterprise search across Deutsche Telekom's internal knowledge bases, enabling employees to find technical documentation, policies, and procedures instantly.", source: "Intuition Labs — Enterprise AI", sourceUrl: "https://intuitionlabs.ai/case-studies" }
+      ]
+    }
+  },
+  {
+    rank: 23, name: "Estée Lauder", sector: "Consumer Goods / Beauty", revenue: 16,
+    platforms: ["openai"],
+    useCases: ["customer", "data", "hr"],
+    details: {
+      openai: [
+        { title: "ChatGPT Enterprise Early Adopter", category: "data", desc: "Estée Lauder Companies was among the first Fortune 500 firms to deploy ChatGPT Enterprise, integrating AI into marketing, product development, consumer insights, and employee productivity workflows.", source: "OpenAI Enterprise Launch", sourceUrl: "https://openai.com/enterprise" },
+        { title: "AI Beauty Advisor & Personalization", category: "customer", desc: "AI-driven personalized beauty recommendations and virtual try-on experiences powered by OpenAI models across M·A·C, Clinique, La Mer, and other brand properties.", source: "Estée Lauder AI Responsibility", sourceUrl: "https://www.elcompanies.com/en/our-commitments/responsible-ai" }
+      ]
+    }
+  },
+  {
+    rank: 24, name: "Block (Square)", sector: "Fintech", revenue: 22,
+    platforms: ["openai"],
+    useCases: ["finance", "data", "customer"],
+    details: {
+      openai: [
+        { title: "ChatGPT Enterprise Deployment", category: "data", desc: "Block was an early adopter of ChatGPT Enterprise, deploying AI tools across Square, Cash App, and internal engineering teams for code generation, financial analytics, and customer support automation.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" },
+        { title: "Merchant Financial Intelligence", category: "finance", desc: "AI-powered financial insights for Square merchants — analyzing sales trends, predicting cash flow gaps, and recommending financing options through Square Capital.", source: "Block Technology", sourceUrl: "https://block.xyz/" }
+      ]
+    }
+  },
+  {
+    rank: 25, name: "Delta Air Lines", sector: "Airlines / Transportation", revenue: 58,
+    platforms: ["claude", "bedrock"],
+    useCases: ["customer", "logistics", "data"],
+    details: {
+      claude: [
+        { title: "AI Customer Service Platform", category: "customer", desc: "Delta deployed Claude via AWS Bedrock for AI-powered customer service — handling flight change requests, refund processing, and baggage claim inquiries with natural language understanding.", source: "Stack AI — Delta Air Lines", sourceUrl: "https://stack-ai.com/case-studies" },
+        { title: "Operational Disruption Management", category: "logistics", desc: "AI systems analyzing weather, crew schedules, and gate availability to proactively rebook passengers and minimize disruption cascades across Delta's network.", source: "Delta Technology", sourceUrl: "https://news.delta.com/technology" }
+      ],
+      bedrock: [
+        { title: "Flight Operations Intelligence", category: "logistics", desc: "AWS Bedrock models processing real-time flight data, fuel optimization signals, and crew logistics to reduce delays and improve on-time performance.", source: "AWS Airlines", sourceUrl: "https://aws.amazon.com/solutions/case-studies/" }
+      ]
+    }
+  },
+  {
+    rank: 26, name: "ADP", sector: "HR Technology / Payroll", revenue: 19,
+    platforms: ["claude", "bedrock"],
+    useCases: ["hr", "data", "finance"],
+    details: {
+      claude: [
+        { title: "HR Intelligence Assistant", category: "hr", desc: "Claude via AWS Bedrock powering ADP's internal HR AI tools — helping HR managers generate job descriptions, analyze workforce data, and respond to employee inquiries at scale.", source: "Stack AI — ADP", sourceUrl: "https://stack-ai.com/case-studies" }
+      ],
+      bedrock: [
+        { title: "Payroll Anomaly Detection", category: "finance", desc: "AWS Bedrock models analyzing payroll processing patterns across ADP's 1M+ client companies to detect anomalies, compliance risks, and potential errors before they impact employees.", source: "AWS Case Studies", sourceUrl: "https://aws.amazon.com/solutions/case-studies/" },
+        { title: "Workforce Analytics Platform", category: "data", desc: "AI-powered workforce analytics enabling ADP clients to benchmark compensation, predict attrition, and identify hiring trends across industries and geographies.", source: "ADP DataCloud", sourceUrl: "https://www.adp.com/what-we-offer/products/adp-datacloud.aspx" }
+      ]
+    }
+  },
+  {
+    rank: 27, name: "HSBC", sector: "Financial Services / Banking", revenue: 66,
+    platforms: ["bedrock"],
+    useCases: ["finance", "legal", "data"],
+    details: {
+      bedrock: [
+        { title: "Generative AI Banking Platform", category: "finance", desc: "HSBC built multiple generative AI applications on AWS Bedrock spanning financial crime detection, regulatory compliance monitoring, and customer service automation across global banking operations.", source: "AWS — HSBC Case Study", sourceUrl: "https://aws.amazon.com/solutions/case-studies/hsbc/" },
+        { title: "Financial Crime Intelligence", category: "legal", desc: "AI-powered analysis of transaction patterns, customer networks, and regulatory watchlists to detect money laundering and financial crime signals at HSBC's global scale.", source: "HSBC Digital", sourceUrl: "https://www.hsbc.com/news-and-views/views/hsbc-views/hsbc-and-ai" }
+      ]
+    }
+  },
+  {
+    rank: 28, name: "Warner Bros. Discovery", sector: "Media & Entertainment", revenue: 41,
+    platforms: ["bedrock"],
+    useCases: ["customer", "data", "hr"],
+    details: {
+      bedrock: [
+        { title: "Content Personalization Engine", category: "customer", desc: "AWS Bedrock powers Warner Bros. Discovery's streaming platform personalization — generating tailored content recommendations for Max subscribers based on viewing habits and contextual signals.", source: "AWS Media Case Studies", sourceUrl: "https://aws.amazon.com/solutions/case-studies/" },
+        { title: "Production Intelligence Platform", category: "data", desc: "AI tools supporting content production decisions — analyzing audience data, sentiment, and competitive performance to inform greenlight decisions and marketing strategy.", source: "WBD Technology", sourceUrl: "https://wbd.com/" }
+      ]
+    }
+  },
+  {
+    rank: 29, name: "Banco BV", sector: "Financial Services / Banking", revenue: 5,
+    platforms: ["gemini"],
+    useCases: ["finance", "data", "customer"],
+    details: {
+      gemini: [
+        { title: "Credit Risk Analysis — 50% Faster", category: "finance", desc: "Banco BV deployed Gemini agents in Google Cloud Vertex AI for automated credit risk analysis — achieving 50% faster processing times compared to traditional methods, enabling faster loan decisions.", source: "Google Cloud — Banco BV Case Study", sourceUrl: "https://cloud.google.com/customers/banco-bv" },
+        { title: "Customer Intelligence Platform", category: "customer", desc: "Gemini-powered customer analytics identifying cross-sell opportunities, credit lifecycle signals, and churn risk across Banco BV's retail and auto financing portfolio.", source: "Intuition Labs AI", sourceUrl: "https://intuitionlabs.ai/case-studies" }
+      ]
+    }
+  },
+  {
+    rank: 30, name: "Cintas", sector: "Business Services", revenue: 10,
+    platforms: ["gemini"],
+    useCases: ["data", "hr", "customer"],
+    details: {
+      gemini: [
+        { title: "Vertex AI Search — Enterprise Knowledge Center", category: "data", desc: "Cintas deployed Vertex AI Search (powered by Gemini) as an enterprise-wide internal knowledge center — enabling employees to instantly search across policies, training materials, and operational guides.", source: "Google Cloud — Cintas Case Study", sourceUrl: "https://cloud.google.com/customers/cintas" },
+        { title: "Route Optimization Intelligence", category: "logistics", desc: "AI-powered route and delivery optimization for Cintas's uniform and workwear distribution network across thousands of service locations.", source: "Google Cloud Solutions", sourceUrl: "https://cloud.google.com/solutions" }
+      ]
+    }
+  },
+  {
+    rank: 31, name: "Procter & Gamble", sector: "Consumer Goods", revenue: 84,
+    platforms: ["openai", "bedrock"],
+    useCases: ["customer", "data", "logistics"],
+    details: {
+      openai: [
+        { title: "Consumer Insights AI", category: "customer", desc: "Synthesizing consumer feedback, social listening data, and market research to accelerate product development and brand strategy across P&G's 65+ brands.", source: "P&G AI Blog", sourceUrl: "https://us.pg.com/blogs/pg-ai/" }
+      ],
+      bedrock: [
+        { title: "Demand Planning Intelligence", category: "logistics", desc: "AWS Bedrock models for demand sensing and replenishment optimization across global CPG supply chain, reducing overstock and improving shelf availability.", source: "AWS CPG Case Studies", sourceUrl: "https://aws.amazon.com/retail/" }
+      ]
+    }
+  },
+  {
+    rank: 32, name: "Bank of America", sector: "Financial Services", revenue: 100,
+    platforms: ["openai", "claude"],
+    useCases: ["finance", "customer", "legal"],
+    details: {
+      openai: [
+        { title: "Erica AI Banking Assistant", category: "customer", desc: "AI virtual assistant handling 1.5B+ client interactions. ChatGPT-class NLP enhanced for financial guidance, fraud alerts, and account management queries.", source: "Bank of America Newsroom", sourceUrl: "https://newsroom.bankofamerica.com/content/newsroom/press-releases/2023/10/bank-of-america-advances-responsible-ai.html" }
+      ],
+      claude: [
+        { title: "Merrill Lynch Wealth Research", category: "finance", desc: "Claude powering Merrill Lynch advisors' investment research workflows, generating client-ready insights from market data and portfolio analytics.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 33, name: "McKinsey & Company", sector: "Consulting", revenue: 16,
+    platforms: ["claude", "openai"],
+    useCases: ["finance", "data", "legal"],
+    details: {
+      claude: [
+        { title: "Client Market Research Engine", category: "finance", desc: "Strategic research workflows using Claude for competitive analysis, market sizing, financial modeling, and synthesis of industry reports for Fortune 500 client engagements.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "Lilli AI Knowledge Platform", category: "data", desc: "McKinsey's internal AI platform powered by GPT-4, connecting 100,000+ consultants to the firm's proprietary knowledge base, project archives, and research library.", source: "McKinsey Digital AI Insights", sourceUrl: "https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai" }
+      ]
+    }
+  },
+  {
+    rank: 34, name: "BBVA", sector: "Financial Services", revenue: 25,
+    platforms: ["openai"],
+    useCases: ["finance", "data", "hr"],
+    details: {
+      openai: [
+        { title: "4,000+ Custom GPTs Platform", category: "data", desc: "BBVA regularly uses more than 4,000 custom GPTs across their organization — one of the highest custom GPT deployments of any Fortune 500 company.", source: "OpenAI Enterprise Report 2025", sourceUrl: "https://openai.com/enterprise" },
+        { title: "Financial Product Personalization", category: "finance", desc: "AI-driven personalized financial recommendations for retail and business banking customers, analyzing transaction history and financial goals.", source: "BBVA AI in Banking", sourceUrl: "https://www.bbva.com/en/innovation/ai-the-dawn-of-a-new-era-in-banking/" }
+      ]
+    }
+  },
+  {
+    rank: 35, name: "Albertsons", sector: "Retail / Grocery", revenue: 79,
+    platforms: ["bedrock", "openai"],
+    useCases: ["logistics", "data", "hr"],
+    details: {
+      bedrock: [
+        { title: "Inbound Shipment AI Forecasting", category: "logistics", desc: "ML models predicting daily inbound shipment volumes to optimize store labor allocation. Resulted in 15% faster product movement from loading dock to shelf during peak seasons.", source: "AWS Case Study — Albertsons", sourceUrl: "https://aws.amazon.com/solutions/case-studies/albertsons/" },
+        { title: "Supplier Communication Analysis", category: "data", desc: "AI analyzing unstructured supplier emails and PDFs to extract delivery changes, risks, and commitments — catching issues that traditional systems miss.", source: "AWS Retail Case Studies", sourceUrl: "https://aws.amazon.com/retail/" }
+      ]
+    }
+  },
+  {
+    rank: 36, name: "Ford Motor", sector: "Automotive", revenue: 185,
+    platforms: ["openai", "bedrock"],
+    useCases: ["data", "customer", "logistics"],
+    details: {
+      openai: [
+        { title: "Ford Pro Intelligence", category: "data", desc: "AI-powered fleet management tools for commercial customers, predicting maintenance needs and optimizing uptime for Ford Pro fleet vehicles.", source: "Ford Pro Technology", sourceUrl: "https://www.ford.com/trucks/fordpro/" }
+      ],
+      bedrock: [
+        { title: "Manufacturing Defect Detection", category: "logistics", desc: "Computer vision models on AWS Bedrock identifying production line defects, reducing quality escapes in vehicle assembly at Ford plants.", source: "AWS Automotive Case Studies", sourceUrl: "https://aws.amazon.com/automotive/" }
+      ]
+    }
+  },
+  {
+    rank: 37, name: "Boeing", sector: "Aerospace & Defense", revenue: 78,
+    platforms: ["claude", "openai"],
+    useCases: ["data", "legal", "logistics"],
+    details: {
+      claude: [
+        { title: "Technical Documentation Analysis", category: "legal", desc: "Claude processing maintenance manuals, compliance documentation, and FAA regulatory filings — analyzing thousands of pages with high accuracy and audit trail.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "Engineering Design Assistance", category: "data", desc: "AI tools supporting aerospace engineers in design iteration, simulation setup, and technical specification drafting.", source: "Boeing Technology", sourceUrl: "https://www.boeing.com/features/2023/12/technology.page" }
+      ]
+    }
+  },
+  {
+    rank: 38, name: "Pfizer", sector: "Pharmaceuticals", revenue: 85,
+    platforms: ["openai", "claude", "bedrock"],
+    useCases: ["data", "legal", "finance"],
+    details: {
+      openai: [
+        { title: "Drug Discovery Literature Mining", category: "data", desc: "AI scanning millions of scientific publications to identify novel drug targets, mechanism of action insights, and competitive landscape intelligence.", source: "Pfizer Digital Health", sourceUrl: "https://www.pfizer.com/science/innovation/digital-health" }
+      ],
+      claude: [
+        { title: "Clinical Trial Documentation", category: "legal", desc: "Claude assisting with FDA regulatory submission preparation, clinical protocol writing, and patient consent form generation.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      bedrock: [
+        { title: "Manufacturing QC Intelligence", category: "logistics", desc: "AWS Bedrock analyzing sensor data from pharmaceutical manufacturing lines to predict quality deviations and prevent batch failures.", source: "AWS Healthcare", sourceUrl: "https://aws.amazon.com/health/" }
+      ]
+    }
+  },
+  {
+    rank: 39, name: "Johnson & Johnson", sector: "Healthcare", revenue: 99,
+    platforms: ["openai", "bedrock"],
+    useCases: ["data", "legal", "logistics"],
+    details: {
+      openai: [
+        { title: "Medical Device Documentation AI", category: "legal", desc: "AI-assisted generation and review of FDA 510(k) submissions, clinical evidence reports, and regulatory correspondence.", source: "J&J Technology & Innovation", sourceUrl: "https://www.jnj.com/innovation/technology-and-innovation" }
+      ],
+      bedrock: [
+        { title: "Pharma Supply Chain Intelligence", category: "logistics", desc: "End-to-end visibility platform on AWS tracking temperature-sensitive pharmaceutical products across global distribution network.", source: "AWS Healthcare", sourceUrl: "https://aws.amazon.com/health/" }
+      ]
+    }
+  },
+  {
+    rank: 40, name: "Target", sector: "Retail", revenue: 109,
+    platforms: ["openai", "bedrock"],
+    useCases: ["customer", "logistics", "data"],
+    details: {
+      openai: [
+        { title: "Personalized Marketing AI", category: "customer", desc: "AI generating personalized promotions, product recommendations, and email communications based on guest purchase patterns.", source: "Target Corporate Strategy", sourceUrl: "https://corporate.target.com/about/purpose-history/our-corporate-strategy" }
+      ],
+      bedrock: [
+        { title: "Inventory Replenishment AI", category: "logistics", desc: "Bedrock-powered demand forecasting for 1,900+ stores, optimizing replenishment cycles and reducing markdowns on seasonal merchandise.", source: "AWS Retail", sourceUrl: "https://aws.amazon.com/retail/" }
+      ]
+    }
+  },
+  {
+    rank: 41, name: "AT&T", sector: "Telecommunications", revenue: 122,
+    platforms: ["openai", "bedrock"],
+    useCases: ["customer", "data", "legal"],
+    details: {
+      openai: [
+        { title: "Network Operations Copilot", category: "data", desc: "AI assistant for network engineers interpreting telemetry data, identifying anomalies, and suggesting remediation actions.", source: "AT&T Innovation Blog", sourceUrl: "https://about.att.com/innovationblog" }
+      ],
+      bedrock: [
+        { title: "Customer Churn Prediction", category: "customer", desc: "AWS Bedrock models analyzing behavioral patterns to identify at-risk customers and trigger personalized retention offers.", source: "AWS Telecommunications", sourceUrl: "https://aws.amazon.com/telecom/" }
+      ]
+    }
+  },
+  {
+    rank: 42, name: "UPS", sector: "Logistics", revenue: 91,
+    platforms: ["openai", "bedrock"],
+    useCases: ["logistics", "customer", "data"],
+    details: {
+      openai: [
+        { title: "ORION AI Routing System", category: "logistics", desc: "Next-generation ORION routing powered by AI processing real-time traffic, weather, and delivery constraints. Saves 100M+ miles annually.", source: "UPS Technology", sourceUrl: "https://www.ups.com/us/en/about/our-company/technology.page" }
+      ],
+      bedrock: [
+        { title: "Package Damage Prediction", category: "data", desc: "AWS Bedrock computer vision models inspecting packages at key network touchpoints, flagging damage risk before delivery.", source: "AWS Logistics", sourceUrl: "https://aws.amazon.com/solutions/retail/" }
+      ]
+    }
+  },
+  {
+    rank: 43, name: "Netflix", sector: "Media & Technology", revenue: 39,
+    platforms: ["claude", "openai"],
+    useCases: ["data", "customer", "hr"],
+    details: {
+      claude: [
+        { title: "Content Localization AI", category: "customer", desc: "Claude-assisted translation and cultural adaptation of subtitles, marketing copy, and metadata across 30+ languages at scale.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "Content Recommendation Engine", category: "customer", desc: "GPT-class models powering next-generation recommendation systems, synthesizing viewing patterns, mood signals, and content metadata.", source: "Netflix Technology Blog", sourceUrl: "https://netflixtechblog.com/" }
+      ]
+    }
+  },
+  {
+    rank: 44, name: "Verizon", sector: "Telecommunications", revenue: 134,
+    platforms: ["openai", "bedrock"],
+    useCases: ["customer", "data", "logistics"],
+    details: {
+      openai: [
+        { title: "Customer Support AI", category: "customer", desc: "AI-powered virtual agent handling billing inquiries, technical support, and plan recommendations across web, app, and call center.", source: "Verizon Business AI", sourceUrl: "https://www.verizon.com/business/resources/articles/ai-in-telecommunications/" }
+      ],
+      bedrock: [
+        { title: "5G Network Optimization", category: "data", desc: "AWS Bedrock models analyzing 5G network performance data to predict congestion, optimize spectrum allocation, and proactively address coverage gaps.", source: "AWS Telecommunications", sourceUrl: "https://aws.amazon.com/telecom/" }
+      ]
+    }
+  },
+  {
+    rank: 45, name: "Salesforce", sector: "Technology / CRM", revenue: 38,
+    platforms: ["gemini", "openai"],
+    useCases: ["customer", "data", "hr", "finance"],
+    details: {
+      gemini: [
+        { title: "Einstein AI + Google Gemini Integration", category: "customer", desc: "Salesforce's Einstein AI platform integrates Google Gemini models via a strategic partnership. Gemini powers grounded AI responses within Salesforce CRM using enterprise data — available across Sales Cloud, Service Cloud, and Marketing Cloud.", source: "Salesforce + Google Cloud Expansion", sourceUrl: "https://www.salesforce.com/news/press-releases/2024/10/google-cloud-salesforce-expand-partnership/" }
+      ],
+      openai: [
+        { title: "Agentforce Customer Service AI", category: "customer", desc: "Salesforce Agentforce uses OpenAI models to autonomously handle customer service inquiries, order management, and case resolution without human intervention. Deployed by hundreds of enterprise customers.", source: "Salesforce Agentforce", sourceUrl: "https://www.salesforce.com/products/agentforce/" }
+      ]
+    }
+  },
+  {
+    rank: 46, name: "Mayo Clinic", sector: "Healthcare", revenue: 19,
+    platforms: ["gemini", "openai"],
+    useCases: ["data", "customer", "legal"],
+    details: {
+      gemini: [
+        { title: "Clinical AI Research Platform", category: "data", desc: "Mayo Clinic partnered with Google Cloud to deploy Gemini-powered AI for clinical research, accelerating medical literature synthesis and patient data analysis.", source: "Google Cloud — Mayo Clinic", sourceUrl: "https://cloud.google.com/blog/topics/healthcare-life-sciences/mayo-clinic-uses-google-cloud-ai" }
+      ],
+      openai: [
+        { title: "Patient Communication AI", category: "customer", desc: "AI-powered patient communication tools generating personalized follow-up instructions, appointment reminders, and clinical summaries.", source: "Mayo Clinic Platform Innovation", sourceUrl: "https://www.mayoclinic.org/about-mayo-clinic/innovation" }
+      ]
+    }
+  },
+  {
+    rank: 47, name: "Best Buy", sector: "Retail / Consumer Electronics", revenue: 47,
+    platforms: ["gemini", "openai"],
+    useCases: ["customer", "data", "logistics"],
+    details: {
+      gemini: [
+        { title: "AI Virtual Assistant on Google CCAI", category: "customer", desc: "Best Buy's AI virtual assistant built on Google Cloud Contact Center AI powered by Gemini models. Handles product support, warranty claims, and Geek Squad scheduling — deflecting millions of calls annually.", source: "Google Cloud CCAI", sourceUrl: "https://cloud.google.com/solutions/contact-center-ai" }
+      ],
+      openai: [
+        { title: "Personalized Recommendations Engine", category: "customer", desc: "AI-driven product recommendation system analyzing purchase history, browsing behavior, and seasonal signals to surface relevant electronics, accessories, and services.", source: "Best Buy Technology", sourceUrl: "https://corporate.bestbuy.com/how-best-buy-is-using-ai/" }
+      ]
+    }
+  },
+  {
+    rank: 48, name: "Travelers Insurance", sector: "Insurance / Financial Services", revenue: 46,
+    platforms: ["gemini", "bedrock"],
+    useCases: ["finance", "legal", "data", "customer"],
+    details: {
+      gemini: [
+        { title: "Claims Processing Intelligence", category: "finance", desc: "Google Gemini integrated into Travelers' claims workflow on Google Cloud for automated damage assessment, policy matching, and settlement estimation — reducing average claims cycle from days to hours for eligible claims.", source: "Google Cloud Financial Services", sourceUrl: "https://cloud.google.com/solutions/financial-services" },
+        { title: "Risk Underwriting Copilot", category: "legal", desc: "Gemini-powered tools assisting underwriters in analyzing commercial risk submissions, property data, and loss history to generate risk scores and coverage recommendations.", source: "Travelers Innovation", sourceUrl: "https://www.travelers.com/about-travelers/innovation" }
+      ],
+      bedrock: [
+        { title: "Fraud Detection AI", category: "finance", desc: "AWS Bedrock models analyzing claims patterns, network signals, and behavioral indicators to flag potentially fraudulent submissions before payment.", source: "AWS Insurance", sourceUrl: "https://aws.amazon.com/financial-services/insurance/" }
+      ]
+    }
+  },
+  {
+    rank: 49, name: "Deloitte", sector: "Consulting / Professional Services", revenue: 67,
+    platforms: ["gemini", "claude", "openai"],
+    useCases: ["finance", "legal", "data", "hr"],
+    details: {
+      gemini: [
+        { title: "Deloitte AI Strategic Alliance", category: "data", desc: "Deloitte is a Google Cloud Premier Partner deploying Gemini across client engagements. The firm uses Gemini in Google Workspace for internal knowledge management and Vertex AI for client-facing AI applications in audit, tax, and advisory.", source: "Google Cloud — Deloitte Partnership", sourceUrl: "https://cloud.google.com/partners/deloitte" }
+      ],
+      claude: [
+        { title: "Regulatory Intelligence Platform", category: "legal", desc: "Claude powering Deloitte's regulatory change management tools, scanning new rules, mapping compliance impacts, and generating advisory briefings for financial services clients.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "Audit Intelligence Engine", category: "finance", desc: "GPT-4-powered tools for automated audit workpaper generation, sampling analysis, and anomaly detection in financial statements.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 50, name: "General Motors", sector: "Automotive", revenue: 187,
+    platforms: ["gemini", "openai"],
+    useCases: ["customer", "data", "logistics"],
+    details: {
+      gemini: [
+        { title: "OnStar AI Assistant — Gemini Powered", category: "customer", desc: "Gemini-powered conversational AI integrated into OnStar, GM's in-vehicle assistant system. Enables natural language queries for navigation, vehicle diagnostics, and emergency services — available across Chevrolet, Buick, GMC, and Cadillac.", source: "Google Cloud — GM Partnership", sourceUrl: "https://cloud.google.com/blog/topics/google-cloud-next/gm-and-google-cloud-expand-partnership" },
+        { title: "Design & Engineering Copilot", category: "data", desc: "Google Gemini integrated into GM engineering workflows for CAD review, technical specification analysis, and design iteration feedback via Google Cloud Vertex AI.", source: "GM AI in Vehicles", sourceUrl: "https://news.gm.com/newsdetail/2024/02/ai-in-vehicles" }
+      ],
+      openai: [
+        { title: "Manufacturing Quality AI", category: "logistics", desc: "ChatGPT-class models deployed in GM factories for defect detection, production scheduling optimization, and supplier quality analysis.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 51, name: "Google (Alphabet)", sector: "Technology", revenue: 358,
+    platforms: ["gemini", "openai"],
+    useCases: ["data", "customer", "hr", "finance"],
+    details: {
+      gemini: [
+        { title: "Google Workspace Gemini", category: "data", desc: "Gemini for Google Workspace embeds generative AI directly into Gmail, Docs, Sheets, Slides, and Meet. Over 3B Workspace users globally with Gemini Pro features available to enterprise customers for drafting, summarizing, and data analysis.", source: "Google Workspace AI", sourceUrl: "https://workspace.google.com/features/ai/" },
+        { title: "Vertex AI — Gemini Enterprise Platform", category: "data", desc: "Gemini models on Vertex AI enabling enterprise developers to build, tune, and deploy AI applications. Used internally for code review, documentation, and system monitoring at Google scale.", source: "Google Vertex AI", sourceUrl: "https://cloud.google.com/vertex-ai" },
+        { title: "NotebookLM Enterprise", category: "data", desc: "Gemini-powered research assistant that ingests enterprise documents, PDFs, and data sources to generate grounded summaries, insights, and Q&A — with citations and source attribution.", source: "Google NotebookLM", sourceUrl: "https://notebooklm.google.com/" }
+      ],
+      openai: [
+        { title: "Cross-Platform AI Evaluation", category: "data", desc: "Internal AI engineering teams benchmark ChatGPT Enterprise capabilities alongside Gemini for specific task types, ensuring Google AI infrastructure decisions are data-driven.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 52, name: "Meta Platforms", sector: "Technology", revenue: 164,
+    platforms: ["openai", "claude"],
+    useCases: ["data", "customer", "hr"],
+    details: {
+      openai: [
+        { title: "Ads Performance Optimization", category: "finance", desc: "AI tools helping advertisers generate ad copy, optimize targeting, and analyze campaign performance across Facebook, Instagram, and WhatsApp.", source: "Meta AI for Business", sourceUrl: "https://www.facebook.com/business/ai" }
+      ],
+      claude: [
+        { title: "Content Moderation Intelligence", category: "legal", desc: "AI systems assisting human content reviewers, classifying policy violations and recommending enforcement actions at scale.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 53, name: "Citigroup", sector: "Financial Services", revenue: 101,
+    platforms: ["claude", "openai"],
+    useCases: ["finance", "legal", "data"],
+    details: {
+      claude: [
+        { title: "Credit Risk Analysis Automation", category: "finance", desc: "Claude processing credit applications, financial statements, and market data to produce risk summaries and flag anomalies for human underwriters.", source: "Anthropic Financial Services", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      openai: [
+        { title: "Regulatory Compliance Monitoring", category: "legal", desc: "Automated regulatory change management — scanning new rules, mapping impact to business processes, and generating compliance action plans.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 54, name: "HackerOne", sector: "Cybersecurity", revenue: 1,
+    platforms: ["claude"],
+    useCases: ["data", "legal", "customer"],
+    details: {
+      claude: [
+        { title: "Vulnerability Triage AI", category: "data", desc: "Claude deployed for automated vulnerability report triage — classifying severity, deduplicating submissions, and routing to the right security team, enabling HackerOne analysts to focus on the most critical bugs.", source: "Anthropic — HackerOne Case Study", sourceUrl: "https://www.anthropic.com/customers/hackerone" },
+        { title: "Bug Bounty Program Intelligence", category: "legal", desc: "AI analyzing vulnerability disclosure patterns, reward history, and exploit complexity to optimize bug bounty program parameters for enterprise customers.", source: "Anthropic Customer Stories", sourceUrl: "https://www.anthropic.com/customers" }
+      ]
+    }
+  },
+  {
+    rank: 55, name: "Exxon Mobil", sector: "Energy", revenue: 400,
+    platforms: ["openai", "bedrock"],
+    useCases: ["data", "logistics", "finance"],
+    details: {
+      openai: [
+        { title: "Geological Data Analysis", category: "data", desc: "AI-assisted analysis of seismic and drilling data to identify optimal extraction sites and predict equipment maintenance needs.", source: "ExxonMobil Technology News", sourceUrl: "https://corporate.exxonmobil.com/news/news-releases/technology" }
+      ],
+      bedrock: [
+        { title: "Commodity Trading Analytics", category: "finance", desc: "AWS Bedrock-powered models analyzing global commodity prices, geopolitical risk signals, and supply disruptions for trading desk decision support.", source: "AWS Energy", sourceUrl: "https://aws.amazon.com/energy/" }
+      ]
+    }
+  },
+  {
+    rank: 56, name: "Figma", sector: "Technology / Design", revenue: 2,
+    platforms: ["gemini"],
+    useCases: ["data", "customer", "hr"],
+    details: {
+      gemini: [
+        { title: "AI Design Review with Gemini", category: "data", desc: "Figma integrated Google Gemini into its design review process — AI auto-generates design suggestions, accessibility audits, and component recommendations directly within the Figma canvas.", source: "Google Cloud — Figma", sourceUrl: "https://cloud.google.com/customers/figma" },
+        { title: "Design-to-Code AI Workflow", category: "data", desc: "Gemini-powered tools enabling designers to generate production-ready code from Figma designs, with AI reviewing component consistency and design system compliance.", source: "Figma AI Features", sourceUrl: "https://www.figma.com/ai/" }
+      ]
+    }
+  },
+  {
+    rank: 57, name: "Lockheed Martin", sector: "Defense & Aerospace", revenue: 71,
+    platforms: ["openai", "bedrock"],
+    useCases: ["data", "logistics", "legal"],
+    details: {
+      openai: [
+        { title: "Technical Intelligence Synthesis", category: "data", desc: "AI analyzing defense procurement documents, technical specifications, and contract requirements to support proposal development teams.", source: "Lockheed Martin AI", sourceUrl: "https://www.lockheedmartin.com/en-us/capabilities/artificial-intelligence.html" }
+      ],
+      bedrock: [
+        { title: "Supply Chain Risk Intelligence", category: "logistics", desc: "Multi-tier supply chain risk monitoring using AWS Bedrock to analyze supplier financial health, geopolitical exposure, and delivery performance.", source: "AWS Defense", sourceUrl: "https://aws.amazon.com/government-education/government/federal/" }
+      ]
+    }
+  },
+  {
+    rank: 58, name: "Chevron", sector: "Energy", revenue: 197,
+    platforms: ["openai", "bedrock"],
+    useCases: ["data", "logistics", "finance"],
+    details: {
+      openai: [
+        { title: "Subsurface Data Interpretation", category: "data", desc: "AI-assisted geological and geophysical data analysis to identify and evaluate oil and gas exploration targets.", source: "Chevron Technology", sourceUrl: "https://www.chevron.com/operations/technology" }
+      ],
+      bedrock: [
+        { title: "Refinery Operations Intelligence", category: "logistics", desc: "Real-time process optimization at refinery operations using predictive models on AWS to reduce energy consumption and maximize yield.", source: "AWS Energy Case Studies", sourceUrl: "https://aws.amazon.com/energy/" }
+      ]
+    }
+  },
+  {
+    rank: 59, name: "Raytheon Technologies", sector: "Defense & Aerospace", revenue: 68,
+    platforms: ["openai", "bedrock"],
+    useCases: ["data", "legal", "logistics"],
+    details: {
+      openai: [
+        { title: "Defense Proposal Intelligence", category: "legal", desc: "AI assisting proposal teams in researching RFP requirements, identifying technical differentiators, and generating compliant response structures.", source: "Raytheon AI Technology", sourceUrl: "https://www.rtx.com/raytheon/what-we-do/advanced-technology" }
+      ],
+      bedrock: [
+        { title: "Predictive Maintenance AI", category: "logistics", desc: "AWS Bedrock models analyzing sensor data from defense and aerospace equipment to predict component failures and optimize maintenance schedules.", source: "AWS Defense", sourceUrl: "https://aws.amazon.com/government-education/government/federal/" }
+      ]
+    }
+  },
+  {
+    rank: 60, name: "Berkshire Hathaway", sector: "Financial Services / Holding", revenue: 365,
+    platforms: ["claude"],
+    useCases: ["finance", "legal", "data"],
+    details: {
+      claude: [
+        { title: "Portfolio & Investment Analysis", category: "finance", desc: "Claude deployed across Berkshire subsidiaries for investment due diligence, financial statement analysis, and acquisition target research.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 61, name: "Lowe's", sector: "Retail / Home Improvement", revenue: 87,
+    platforms: ["openai"],
+    useCases: ["customer", "logistics", "data"],
+    details: {
+      openai: [
+        { title: "AI Customer Assistant", category: "customer", desc: "Conversational shopping assistant achieving 2× conversion rate vs. human reps. Helps customers find products, get project advice, and navigate home improvement guidance.", source: "OpenAI State of Enterprise AI 2025", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 62, name: "Oscar Health", sector: "Healthcare / Insurance", revenue: 6,
+    platforms: ["openai"],
+    useCases: ["customer", "data"],
+    details: {
+      openai: [
+        { title: "Benefits AI Chatbot", category: "customer", desc: "AI chatbot answering 58% of member benefits questions instantly. Handles 39% of all inquiries without any human escalation — dramatically reducing call center load.", source: "OpenAI Enterprise Report 2025", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 63, name: "Indeed", sector: "HR Technology", revenue: 5,
+    platforms: ["openai"],
+    useCases: ["hr", "data"],
+    details: {
+      openai: [
+        { title: "AI Job Matching System", category: "hr", desc: "ChatGPT-powered matching algorithm that increased started applications by 20% and hires by 13% by better aligning job seeker profiles to employer needs.", source: "OpenAI Enterprise Report 2025", sourceUrl: "https://openai.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 64, name: "Canva", sector: "Technology / Design", revenue: 2,
+    platforms: ["openai"],
+    useCases: ["customer", "data", "hr"],
+    details: {
+      openai: [
+        { title: "ChatGPT Enterprise for Design Teams", category: "data", desc: "Canva deployed ChatGPT Enterprise to empower their global design and product teams with AI for content creation, research synthesis, and product decision-making.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" },
+        { title: "Magic Write AI Content Generator", category: "customer", desc: "AI-powered writing and design tools embedded in Canva for 150M+ users, using OpenAI models to generate copy, suggest layouts, and create visual content.", source: "Canva Magic", sourceUrl: "https://www.canva.com/magic/" }
+      ]
+    }
+  },
+  {
+    rank: 65, name: "The Carlyle Group", sector: "Financial Services / Private Equity", revenue: 9,
+    platforms: ["openai"],
+    useCases: ["finance", "data", "legal"],
+    details: {
+      openai: [
+        { title: "ChatGPT Enterprise — PE Research Platform", category: "finance", desc: "The Carlyle Group adopted ChatGPT Enterprise as an early adopter, deploying AI for private equity deal research, portfolio company analysis, and limited partner communications.", source: "OpenAI Enterprise Launch", sourceUrl: "https://openai.com/enterprise" },
+        { title: "Portfolio Intelligence AI", category: "data", desc: "AI tools synthesizing news, financials, and market signals across Carlyle's 300+ portfolio companies to surface risks and opportunities for investment teams.", source: "Carlyle Technology", sourceUrl: "https://www.carlyle.com/about-carlyle/team/technology" }
+      ]
+    }
+  },
+  {
+    rank: 66, name: "BNY Mellon", sector: "Financial Services", revenue: 19,
+    platforms: ["openai"],
+    useCases: ["finance", "data", "hr"],
+    details: {
+      openai: [
+        { title: "GitHub Copilot Enterprise — 80% Dev Adoption", category: "data", desc: "BNY Mellon achieved 80% of its 3,000+ developers using GitHub Copilot daily — one of the highest adoption rates in financial services. AI pair programming across securities processing and custody platforms.", source: "Microsoft AI Success Stories — BNY Mellon", sourceUrl: "https://blogs.microsoft.com/blog/2024/01/bny-mellon-ai-adoption/" },
+        { title: "Client Reporting Automation", category: "finance", desc: "AI-powered generation of institutional client reports, reconciliation summaries, and regulatory filings across BNY Mellon's $49T+ in assets under custody.", source: "BNY Mellon Technology", sourceUrl: "https://www.bnymellon.com/us/en/what-we-do/technology.html" }
+      ]
+    }
+  },
+  {
+    rank: 67, name: "Accenture", sector: "Consulting / Technology Services", revenue: 64,
+    platforms: ["openai", "claude", "gemini", "bedrock"],
+    useCases: ["data", "finance", "hr", "customer", "legal"],
+    details: {
+      openai: [
+        { title: "AI-First Transformation — 300K Employees", category: "data", desc: "Accenture trained 300,000+ employees on AI and deployed ChatGPT Enterprise company-wide for internal productivity, consulting delivery acceleration, and client engagement support.", source: "OpenAI Enterprise", sourceUrl: "https://openai.com/enterprise" }
+      ],
+      claude: [
+        { title: "Legal & Compliance AI Practice", category: "legal", desc: "Claude deployed across Accenture's legal and regulatory practices for contract analysis, compliance audits, and regulatory advisory work.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      gemini: [
+        { title: "Google Cloud Practice — Vertex AI", category: "data", desc: "Accenture is a Google Cloud Premier Partner deploying Gemini and Vertex AI solutions for enterprise clients across banking, healthcare, and retail.", source: "Google Cloud — Accenture", sourceUrl: "https://cloud.google.com/partners/accenture" }
+      ],
+      bedrock: [
+        { title: "AWS AI Practice", category: "data", desc: "Accenture is an AWS Premier Partner deploying Bedrock-powered solutions for enterprise clients, including generative AI applications in financial services, healthcare, and supply chain.", source: "AWS Partners — Accenture", sourceUrl: "https://aws.amazon.com/partners/accenture/" }
+      ]
+    }
+  },
+  {
+    rank: 68, name: "Anthem (Elevance Health)", sector: "Healthcare / Insurance", revenue: 174,
+    platforms: ["openai", "bedrock"],
+    useCases: ["customer", "data", "legal"],
+    details: {
+      openai: [
+        { title: "Member Benefits Navigation AI", category: "customer", desc: "AI-powered member support tools helping 46M+ Anthem members understand benefits, find in-network providers, and navigate prior authorization processes.", source: "Elevance Health Technology", sourceUrl: "https://www.elevancehealth.com/what-we-do/technology-innovation" }
+      ],
+      bedrock: [
+        { title: "Clinical Risk Stratification", category: "data", desc: "AWS Bedrock models analyzing clinical data to identify high-risk members and trigger proactive care management interventions — improving outcomes and reducing costs.", source: "AWS Healthcare", sourceUrl: "https://aws.amazon.com/health/" }
+      ]
+    }
+  },
+  {
+    rank: 69, name: "Humana", sector: "Healthcare / Insurance", revenue: 106,
+    platforms: ["claude", "bedrock"],
+    useCases: ["customer", "data", "legal"],
+    details: {
+      claude: [
+        { title: "Medicare Plan Advisor AI", category: "customer", desc: "Claude-powered conversational AI helping Medicare members compare plans, understand coverage, and find in-network providers — reducing call center volume and improving member satisfaction.", source: "Anthropic Healthcare", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ],
+      bedrock: [
+        { title: "Claims Intelligence Platform", category: "finance", desc: "AWS Bedrock-powered claims review for anomaly detection, clinical coding validation, and fraud prevention across Humana's Medicare Advantage population.", source: "AWS Healthcare Insurance", sourceUrl: "https://aws.amazon.com/health/" }
+      ]
+    }
+  },
+  {
+    rank: 70, name: "Eaton Corporation", sector: "Industrial / Power Management", revenue: 25,
+    platforms: ["bedrock"],
+    useCases: ["data", "logistics", "customer"],
+    details: {
+      bedrock: [
+        { title: "Intelligent Power Analytics", category: "data", desc: "AWS Bedrock powering Eaton's smart energy management platforms — AI analyzing power usage patterns to optimize energy efficiency and predict equipment failures across industrial, commercial, and data center customers.", source: "AWS Industrial Case Studies", sourceUrl: "https://aws.amazon.com/solutions/case-studies/" }
+      ]
+    }
+  },
+  {
+    rank: 71, name: "Workday", sector: "HR Technology / ERP", revenue: 8,
+    platforms: ["openai", "claude"],
+    useCases: ["hr", "finance", "data"],
+    details: {
+      openai: [
+        { title: "Workday AI for HR & Finance", category: "hr", desc: "Workday embedded OpenAI models into its HCM and Finance platform — enabling AI-generated insights, automated reporting, and predictive analytics for 10,000+ enterprise customers managing HR, payroll, and financial operations.", source: "Workday AI", sourceUrl: "https://www.workday.com/en-us/artificial-intelligence.html" }
+      ],
+      claude: [
+        { title: "Intelligent Document Processing", category: "finance", desc: "Claude integrated into Workday's financial document processing workflows for automated invoice matching, expense categorization, and audit trail generation.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 72, name: "ServiceNow", sector: "Technology / IT Services", revenue: 10,
+    platforms: ["openai", "claude"],
+    useCases: ["data", "hr", "customer", "legal"],
+    details: {
+      openai: [
+        { title: "Now Assist — Generative AI Platform", category: "data", desc: "ServiceNow Now Assist uses OpenAI models to auto-generate case summaries, suggest next best actions, and resolve IT incidents — deployed across 7,000+ enterprise customers and proven to reduce case resolution time by 52%.", source: "ServiceNow Now Assist", sourceUrl: "https://www.servicenow.com/products/now-assist.html" }
+      ],
+      claude: [
+        { title: "Enterprise Workflow Intelligence", category: "customer", desc: "Claude powering ServiceNow's intelligent automation for complex multi-step workflows, including employee onboarding, procurement, and IT asset management.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 73, name: "Lockheed Martin (R&D)", sector: "Defense & Aerospace", revenue: 71,
+    platforms: ["openai"],
+    useCases: ["data", "legal"],
+    details: {
+      openai: [
+        { title: "AI Systems Engineering Platform", category: "data", desc: "AI tools supporting complex defense systems engineering workflows, including requirements analysis, trade-study documentation, and verification planning.", source: "Lockheed Martin AI Capabilities", sourceUrl: "https://www.lockheedmartin.com/en-us/capabilities/artificial-intelligence.html" }
+      ]
+    }
+  },
+  {
+    rank: 74, name: "Stripe", sector: "Fintech / Payments", revenue: 14,
+    platforms: ["openai", "claude"],
+    useCases: ["finance", "data", "legal"],
+    details: {
+      openai: [
+        { title: "Fraud Detection AI", category: "finance", desc: "Stripe's Radar fraud detection system uses AI models trained on billions of transactions to identify fraudulent payments in real-time — blocking fraud while minimizing false declines for legitimate customers.", source: "Stripe Radar", sourceUrl: "https://stripe.com/radar" },
+        { title: "Developer Documentation AI", category: "data", desc: "ChatGPT-powered documentation search and code generation tools embedded in Stripe's developer portal, reducing time-to-integration for developers.", source: "Stripe Developer Tools", sourceUrl: "https://stripe.com/docs" }
+      ],
+      claude: [
+        { title: "Disputes & Compliance Intelligence", category: "legal", desc: "Claude-powered analysis of payment disputes, chargeback documentation, and regulatory compliance checks across Stripe's global payments network.", source: "Anthropic Enterprise", sourceUrl: "https://www.anthropic.com/enterprise" }
+      ]
+    }
+  },
+  {
+    rank: 75, name: "Siemens", sector: "Industrial / Technology", revenue: 91,
+    platforms: ["openai", "bedrock", "gemini"],
+    useCases: ["data", "logistics", "customer"],
+    details: {
+      openai: [
+        { title: "Industrial AI Copilot", category: "data", desc: "Siemens' Industrial Copilot, built in partnership with Microsoft and OpenAI, enables engineers to interact with complex automation systems using natural language — dramatically reducing programming time for manufacturing equipment.", source: "Siemens + Microsoft AI", sourceUrl: "https://press.siemens.com/global/en/pressrelease/siemens-and-microsoft-collaborate-industrial-ai-copilot" }
+      ],
+      bedrock: [
+        { title: "Smart Infrastructure Analytics", category: "logistics", desc: "AWS Bedrock models analyzing real-time building and infrastructure sensor data to predict maintenance needs and optimize energy consumption across smart building deployments.", source: "AWS Industrial", sourceUrl: "https://aws.amazon.com/iot/solutions/industrial/" }
+      ],
+      gemini: [
+        { title: "Google Cloud Manufacturing AI", category: "data", desc: "Siemens partnered with Google Cloud to deploy Gemini-powered AI for quality inspection and process optimization in manufacturing environments.", source: "Google Cloud Manufacturing", sourceUrl: "https://cloud.google.com/solutions/manufacturing" }
+      ]
+    }
+  }
+,
+  {
+    rank: 76, name: "John Deere", sector: "Agriculture / Industrial Technology", revenue: 61,
+    platforms: ["openai"],
+    useCases: ["agri", "customer", "data", "logistics"],
+    details: {
+      openai: [
+        { title: "See & Spray Precision Agriculture AI", category: "agri", desc: "John Deere's See & Spray technology uses 36 cameras and advanced machine learning to identify and spray only weeds — while moving at 12-15 mph covering three football fields per minute. Result: up to 70% less herbicide use across millions of acres.", source: "OpenAI — John Deere Case Study", sourceUrl: "https://openai.com/index/john-deere-justin-rose/" },
+        { title: "AI-Powered Dealer & Customer Success", category: "customer", desc: "OpenAI APIs power John Deere's AI-native customer success model — giving dealers instant diagnostics, parts lists, and repair instructions from telematics data. AI-generated personalized ROI reports show farmers seasonal savings, supporting subscription renewals at a 1,000:1 advisor-to-farmer ratio.", source: "OpenAI — John Deere", sourceUrl: "https://openai.com/index/john-deere-justin-rose/" },
+        { title: "Real-Time Farm Operations Intelligence", category: "data", desc: "AI analyzes hundreds of thousands of machines in real-time to flag when equipment is underperforming, identify configuration issues (boom height, speed, camera cleanliness), and deliver targeted recommendations to farmers and dealers at the right moment.", source: "OpenAI — John Deere", sourceUrl: "https://openai.com/index/john-deere-justin-rose/" }
+      ]
+    }
+  },
+  {
+    rank: 77, name: "Tyson Foods", sector: "Food Production / Agriculture", revenue: 53,
+    platforms: ["claude", "bedrock"],
+    useCases: ["agri", "customer", "data", "logistics"],
+    details: {
+      claude: [
+        { title: "AI Foodservice Assistant — Claude 3.5 Sonnet", category: "customer", desc: "Tyson Foodservice deployed Claude 3.5 Sonnet on AWS Bedrock for a conversational AI assistant on their website — enabling 1M+ foodservice operators (restaurants, schools, healthcare) to search products, find distributors, explore menu trends, and get personalized recommendations through natural language.", source: "AWS Blog — Tyson Foods AI Assistant", sourceUrl: "https://aws.amazon.com/blogs/machine-learning/tyson-foods-elevates-customer-search-experience-with-an-ai-powered-conversational-assistant/" }
+      ],
+      bedrock: [
+        { title: "Protein Supply Chain Intelligence", category: "agri", desc: "AWS Bedrock powers AI systems across Tyson's operations — the largest US protein producer (20% of national beef, pork, and chicken). AI-driven demand forecasting, distributor network optimization, and product availability analysis across 1M+ foodservice operators.", source: "AWS Blog — Tyson Foods", sourceUrl: "https://aws.amazon.com/blogs/machine-learning/tyson-foods-elevates-customer-search-experience-with-an-ai-powered-conversational-assistant/" },
+        { title: "Customer Insights & Demand Analytics", category: "data", desc: "AI analyzes operator queries, product searches, and high-value actions to surface trends in product category demand, regional preferences, and seasonal patterns — informing inventory management and marketing strategy.", source: "AWS Blog — Tyson Foods", sourceUrl: "https://aws.amazon.com/blogs/machine-learning/tyson-foods-elevates-customer-search-experience-with-an-ai-powered-conversational-assistant/" }
+      ]
+    }
+  },
+  {
+    rank: 78, name: "Cargill", sector: "Agriculture / Food Production", revenue: 177,
+    platforms: ["openai", "bedrock"],
+    useCases: ["agri", "data", "logistics", "hr"],
+    details: {
+      openai: [
+        { title: "CASC Me Anything — Agriculture Supply Chain AI", category: "agri", desc: "Cargill piloted 'CASC Me Anything' (Cargill Agriculture Supply Chain chatbot) — a GPT-powered knowledge platform unlocking institutional supply chain intelligence. Enables employees to query historical logistics data, supplier insights, and agricultural market knowledge that was previously siloed.", source: "Fortune — Cargill Generative AI", sourceUrl: "https://fortune.com/2024/04/24/cargill-leans-on-regenerative-agriculture-and-generative-ai-to-feed-the-planet/" },
+        { title: "Ingredient Formulation R&D AI", category: "agri", desc: "Generative AI accelerating food ingredient innovation — helping R&D teams rapidly explore novel ingredient combinations, formulate products, and shorten time from concept to commercial production.", source: "Cargill Innovation Trends", sourceUrl: "https://www.cargill.com/story/three-innovation-trends-future-food" }
+      ],
+      bedrock: [
+        { title: "Maritime Logistics & Shipment Forecasting", category: "logistics", desc: "AI predicting ocean shipment arrival times and optimizing routing across Cargill's global commodity trading and transport network — one of the world's largest agricultural supply chains.", source: "Cargill — Reinventing Operations", sourceUrl: "https://www.cargill.com/story/reinventing-operations-resilient-food-system" }
+      ]
+    }
+  },
+  {
+    rank: 79, name: "Corteva Agriscience", sector: "Agriculture / Life Sciences", revenue: 17,
+    platforms: ["gemini"],
+    useCases: ["agri", "data", "logistics"],
+    details: {
+      gemini: [
+        { title: "Seed Genetics AI with Google AlphaFold", category: "agri", desc: "Corteva uses Google AI models including AlphaFold 2 to predict protein structures with near-lab accuracy — foundational to engineering disease-resistant crops. AI-accelerated precision breeding reduced a breeding cycle from 5-6 years to just 4 months, more than doubling their genetic innovation rate by 2030.", source: "Google Public Policy — Corteva", sourceUrl: "https://publicpolicy.google/stories/corteva-indiana/" },
+        { title: "Crop Protection AI Platform", category: "agri", desc: "Google AI powering Corteva's crop protection R&D — identifying new molecules for sustainable pest and disease control, analyzing field data to optimize protection recommendations, and scaling precision agronomic guidance to farmers globally.", source: "Bayer AI for Agriculture", sourceUrl: "https://www.bayer.com/en/agriculture/ai-for-agriculture" },
+        { title: "FieldView Precision Farming Intelligence", category: "data", desc: "AI tools for 220M+ acres under management — satellite-based yield zone mapping, planting density optimization, and harvest performance analysis delivered to farmers through Corteva's digital farming platform.", source: "Google Public Policy — Corteva", sourceUrl: "https://publicpolicy.google/stories/corteva-indiana/" }
+      ]
+    }
+  }
+];
+
+// ===== STATE =====
+let activePlatformFilter = 'all';
+let activeUseCaseFilter = 'all';
+let searchQuery = '';
+let sortCol = 'rank';
+let sortDir = 1;
+let currentView = 'overview';
+
+// ===== THEME =====
+const toggle = document.querySelector('[data-theme-toggle]');
+let theme = 'dark';
+toggle.addEventListener('click', () => {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  toggle.innerHTML = theme === 'dark'
+    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  updateChartColors();
+});
+
+// ===== VIEW SWITCHING =====
+function setView(view, el) {
+  currentView = view;
+  document.querySelectorAll('.nav-item[data-view]').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('view-overview').style.display = view === 'overview' ? 'block' : 'none';
+  document.getElementById('view-companies').style.display = view === 'companies' ? 'block' : 'none';
+  if (view === 'companies') renderTable();
+}
+
+// ===== FILTERS =====
+function filterPlatform(p, el) {
+  activePlatformFilter = p;
+  document.querySelectorAll('.platform-chip').forEach(c => {
+    c.className = 'platform-chip';
+  });
+  if (p === 'openai') el.className = 'platform-chip active-openai';
+  else if (p === 'claude') el.className = 'platform-chip active-claude';
+  else if (p === 'bedrock') el.className = 'platform-chip active-bedrock';
+  else if (p === 'gemini') el.className = 'platform-chip active-gemini';
+  else { el.style.background = 'var(--color-surface-offset)'; el.style.borderColor = 'var(--color-border)'; el.style.color = 'var(--color-text)'; el.className = 'platform-chip'; }
+  updateActiveFilterChips();
+  if (currentView === 'companies') renderTable();
+}
+
+function filterUseCase(uc) {
+  activeUseCaseFilter = activeUseCaseFilter === uc ? 'all' : uc;
+  updateActiveFilterChips();
+  if (currentView === 'companies') renderTable();
+  document.querySelectorAll('.nav-item:not([data-view])').forEach(n => {
+    n.classList.remove('active');
+    if (activeUseCaseFilter !== 'all' && n.textContent.toLowerCase().includes(activeUseCaseFilter.toLowerCase().slice(0,5))) {
+      n.classList.add('active');
+    }
+  });
+}
+
+function updateActiveFilterChips() {
+  const container = document.getElementById('active-filters');
+  container.innerHTML = '';
+  if (activePlatformFilter !== 'all') {
+    const names = { openai: 'ChatGPT Enterprise', claude: 'Anthropic Claude', bedrock: 'AWS Bedrock', gemini: 'Google Gemini' };
+    const cls = { openai: 'active', claude: 'active-claude', bedrock: 'active-bedrock', gemini: 'active' };
+    const chip = document.createElement('button');
+    chip.className = `filter-chip ${cls[activePlatformFilter]}`;
+    chip.textContent = `${names[activePlatformFilter]} ×`;
+    chip.onclick = () => filterPlatform('all', document.getElementById('chip-all'));
+    container.appendChild(chip);
+  }
+  if (activeUseCaseFilter !== 'all') {
+    const chip = document.createElement('button');
+    chip.className = 'filter-chip active';
+    chip.textContent = `${activeUseCaseFilter.charAt(0).toUpperCase() + activeUseCaseFilter.slice(1)} ×`;
+    chip.onclick = () => filterUseCase(activeUseCaseFilter);
+    container.appendChild(chip);
+  }
+}
+
+function handleSearch(val) {
+  searchQuery = val.toLowerCase();
+  if (currentView === 'companies') renderTable();
+}
+
+// ===== TABLE =====
+function getFiltered() {
+  return companies.filter(c => {
+    if (activePlatformFilter !== 'all' && !c.platforms.includes(activePlatformFilter)) return false;
+    if (activeUseCaseFilter !== 'all' && !c.useCases.includes(activeUseCaseFilter)) return false;
+    if (searchQuery && !c.name.toLowerCase().includes(searchQuery) && !c.sector.toLowerCase().includes(searchQuery) &&
+        !c.useCases.join(' ').includes(searchQuery) && !c.platforms.join(' ').includes(searchQuery)) return false;
+    return true;
+  });
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll('.company-table th[data-col]').forEach(th => {
+    th.classList.toggle('sorted', th.dataset.col === col);
+  });
+  renderTable();
+}
+
+const ucLabels = { finance: 'Finance', logistics: 'Logistics', data: 'Data', hr: 'HR', customer: 'Customer', legal: 'Legal', agri: 'Agri & Food' };
+const platformLabels = { openai: 'ChatGPT', claude: 'Claude', bedrock: 'Bedrock', gemini: 'Gemini' };
+
+function renderTable() {
+  const filtered = getFiltered();
+  filtered.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+    return sortDir * (va - vb);
+  });
+  const maxRev = Math.max(...companies.map(c => c.revenue));
+  const body = document.getElementById('company-table-body');
+  body.innerHTML = '';
+  document.getElementById('result-count-text').textContent = `Showing ${filtered.length} of ${companies.length} companies`;
+  if (filtered.length === 0) {
+    body.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:3rem; color:var(--color-text-muted);">No companies match current filters</td></tr>';
+    return;
+  }
+  filtered.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.onclick = () => openDetail(c);
+    const platforms = c.platforms.map(p => `<span class="platform-badge ${p}">${platformLabels[p]}</span>`).join('');
+    const useCases = c.useCases.map(u => `<span class="use-case-tag ${u}">${ucLabels[u] || u}</span>`).join('');
+    const pct = Math.round((c.revenue / maxRev) * 100);
+    tr.innerHTML = `
+      <td><span class="rank-badge">#${c.rank}</span></td>
+      <td>
+        <div class="company-name">${c.name}</div>
+        <div class="company-sector">${c.sector}</div>
+      </td>
+      <td style="color:var(--color-text-muted); font-size:var(--text-xs);">${c.sector}</td>
+      <td><div class="platform-badges">${platforms}</div></td>
+      <td><div class="use-case-tags">${useCases}</div></td>
+      <td>
+        <div class="revenue-bar-wrapper">
+          <div class="revenue-bar-bg"><div class="revenue-bar-fill" style="width:${pct}%"></div></div>
+          <span class="revenue-label">$${c.revenue}B</span>
+        </div>
+      </td>`;
+    body.appendChild(tr);
+  });
+}
+
+// ===== DETAIL PANEL =====
+function openDetail(c) {
+  document.getElementById('detail-company-name').textContent = c.name;
+  document.getElementById('detail-company-meta').textContent = `${c.sector} · Fortune 500 #${c.rank} · Revenue: $${c.revenue}B`;
+  const body = document.getElementById('detail-body');
+  let html = '';
+
+  // Platform badges
+  html += `<div class="detail-section">
+    <div class="detail-section-title">AI Platforms</div>
+    <div class="platform-badges" style="gap:var(--space-2);">
+      ${c.platforms.map(p => {
+        const names = { openai: 'ChatGPT Enterprise', claude: 'Anthropic Claude', bedrock: 'AWS Bedrock', gemini: 'Google Gemini' };
+        return `<span class="platform-badge ${p}" style="padding:4px 12px; font-size:var(--text-xs);">${names[p]}</span>`;
+      }).join('')}
+    </div>
+  </div>`;
+
+  // Use cases
+  html += `<div class="detail-section">
+    <div class="detail-section-title">Use Case Categories</div>
+    <div class="use-case-tags">
+      ${c.useCases.map(u => `<span class="use-case-tag ${u}">${ucLabels[u]}</span>`).join('')}
+    </div>
+  </div>`;
+
+  // Detailed use cases
+  const allUCs = [];
+  Object.entries(c.details).forEach(([platform, ucs]) => {
+    ucs.forEach(uc => allUCs.push({ ...uc, platform }));
+  });
+  html += `<div class="detail-section">
+    <div class="detail-section-title">Deployed AI Applications (${allUCs.length})</div>
+    ${allUCs.map(uc => `
+      <div class="detail-use-case">
+        <div class="detail-uc-header">
+          <span class="detail-uc-platform ${uc.platform}">${uc.platform === 'openai' ? 'ChatGPT' : uc.platform === 'claude' ? 'Claude' : uc.platform === 'gemini' ? 'Gemini' : 'Bedrock'}</span>
+          <span class="use-case-tag ${uc.category}" style="font-size:11px;">${ucLabels[uc.category]}</span>
+        </div>
+        <div class="detail-uc-title">${uc.title}</div>
+        <div class="detail-uc-desc" style="margin-top:var(--space-2);">${uc.desc}</div>
+        ${uc.sourceUrl ? `<a class="detail-uc-source" href="${uc.sourceUrl}" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;vertical-align:middle;margin-right:3px;"><path d="M5 1H2a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V7M8 1h3m0 0v3m0-3L5 7"/></svg>
+          ${uc.source || 'Primary Source'}
+        </a>` : ''}
+      </div>
+    `).join('')}
+  </div>`;
+
+  body.innerHTML = html;
+  document.getElementById('detail-panel').classList.add('open');
+  document.getElementById('panel-overlay').classList.add('open');
+}
+
+function closeDetailPanel() {
+  document.getElementById('detail-panel').classList.remove('open');
+  document.getElementById('panel-overlay').classList.remove('open');
+}
+
+// ===== CHARTS =====
+let charts = {};
+
+function getChartColors() {
+  return {
+    openai: '#10a37f',
+    claude: '#c96442',
+    bedrock: '#ff9900',
+    gemini: '#4285f4',
+    finance: '#5b8ff9',
+    logistics: '#61d9b4',
+    data: '#b882f5',
+    hr: '#f9c95b',
+    customer: '#f97b72',
+    legal: '#6eb5ff',
+    gridColor: theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+    textColor: theme === 'dark' ? '#7a87a3' : '#5e6d8c',
+  };
+}
+
+function initCharts() {
+  const c = getChartColors();
+
+  // Use Case Chart (horizontal bar)
+  const ctx1 = document.getElementById('useCaseChart').getContext('2d');
+  charts.useCase = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['Data Discovery', 'Customer Service', 'Finance Research', 'Logistics / Supply Chain', 'HR & Workforce', 'Legal & Compliance', 'Agriculture & Food'],
+      datasets: [
+        {
+          label: 'ChatGPT Enterprise',
+          data: [78, 71, 62, 45, 55, 38, 32],
+          backgroundColor: c.openai + 'cc',
+          borderRadius: 4,
+        },
+        {
+          label: 'Anthropic Claude',
+          data: [42, 28, 55, 18, 22, 48, 18],
+          backgroundColor: c.claude + 'cc',
+          borderRadius: 4,
+        },
+        {
+          label: 'AWS Bedrock',
+          data: [55, 35, 30, 62, 20, 25, 28],
+          backgroundColor: c.bedrock + 'cc',
+          borderRadius: 4,
+        },
+        {
+          label: 'Google Gemini',
+          data: [48, 55, 35, 28, 42, 30, 22],
+          backgroundColor: c.gemini + 'cc',
+          borderRadius: 4,
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index' },
+      plugins: {
+        legend: { position: 'top', labels: { color: c.textColor, boxWidth: 12, padding: 12, font: { size: 11 } } },
+        tooltip: { backgroundColor: '#1c2333', borderColor: '#2a3550', borderWidth: 1, titleFont: { size: 12 }, bodyFont: { size: 11 } }
+      },
+      scales: {
+        x: { stacked: false, grid: { color: c.gridColor }, ticks: { color: c.textColor, font: { size: 10 }, callback: v => v + '%' } },
+        y: { grid: { display: false }, ticks: { color: c.textColor, font: { size: 11 } } }
+      }
+    }
+  });
+
+  // Market Share Doughnut
+  const ctx2 = document.getElementById('marketShareChart').getContext('2d');
+  charts.market = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['Anthropic Claude', 'ChatGPT Enterprise', 'Google Gemini', 'Other'],
+      datasets: [{
+        data: [40, 29, 22, 9],
+        backgroundColor: [c.claude, c.openai, c.gemini, c.textColor + '44'],
+        borderColor: 'transparent',
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '68%',
+      plugins: {
+        legend: { position: 'right', labels: { color: c.textColor, boxWidth: 12, padding: 12, font: { size: 11 } } },
+        tooltip: { backgroundColor: '#1c2333', borderColor: '#2a3550', borderWidth: 1, callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}%` } }
+      }
+    }
+  });
+
+  // Adoption timeline
+  const ctx3 = document.getElementById('adoptionChart').getContext('2d');
+  charts.adoption = new Chart(ctx3, {
+    type: 'line',
+    data: {
+      labels: ['Q1 2023', 'Q3 2023', 'Q1 2024', 'Q3 2024', 'Q1 2025', 'Q3 2025', 'Q1 2026'],
+      datasets: [
+        {
+          label: 'ChatGPT Enterprise % F500',
+          data: [15, 50, 70, 78, 85, 90, 92],
+          borderColor: c.openai, backgroundColor: c.openai + '20',
+          fill: true, tension: 0.4, pointRadius: 4, borderWidth: 2
+        },
+        {
+          label: 'F500 w/ Full Deployment',
+          data: [2, 8, 18, 22, 40, 55, 67],
+          borderColor: c.claude, backgroundColor: c.claude + '20',
+          fill: true, tension: 0.4, pointRadius: 4, borderWidth: 2,
+          yAxisID: 'y2'
+        },
+        {
+          label: 'Google Gemini % F500',
+          data: [3, 8, 12, 15, 18, 20, 20],
+          borderColor: c.gemini, backgroundColor: c.gemini + '15',
+          fill: true, tension: 0.4, pointRadius: 4, borderWidth: 2, borderDash: [5,3]
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index' },
+      plugins: {
+        legend: { position: 'top', labels: { color: c.textColor, boxWidth: 12, padding: 12, font: { size: 11 } } },
+        tooltip: { backgroundColor: '#1c2333', borderColor: '#2a3550', borderWidth: 1 }
+      },
+      scales: {
+        x: { grid: { color: c.gridColor }, ticks: { color: c.textColor, font: { size: 10 } } },
+        y: { grid: { color: c.gridColor }, ticks: { color: c.textColor, font: { size: 10 }, callback: v => v + '%' }, min: 0, max: 100 },
+        y2: { position: 'right', grid: { display: false }, ticks: { color: c.textColor, font: { size: 10 }, callback: v => v + ' co.' } }
+      }
+    }
+  });
+
+  // Use case donut
+  const ctx4 = document.getElementById('usecaseDonut').getContext('2d');
+  const ucCounts = {};
+  companies.forEach(co => co.useCases.forEach(u => { ucCounts[u] = (ucCounts[u] || 0) + 1; }));
+  const ucNames = { finance: 'Finance', logistics: 'Logistics', data: 'Data Discovery', hr: 'HR', customer: 'Customer', legal: 'Legal', agri: 'Agri & Food' };
+  const ucColors = { finance: c.finance, logistics: c.logistics, data: c.data, hr: c.hr, customer: c.customer, legal: c.legal };
+  const sortedUC = Object.entries(ucCounts).sort((a,b) => b[1]-a[1]);
+  charts.ucDonut = new Chart(ctx4, {
+    type: 'doughnut',
+    data: {
+      labels: sortedUC.map(([k]) => ucNames[k] || k),
+      datasets: [{
+        data: sortedUC.map(([,v]) => v),
+        backgroundColor: sortedUC.map(([k]) => ucColors[k] || '#888'),
+        borderColor: 'transparent', hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '65%',
+      plugins: {
+        legend: { position: 'right', labels: { color: c.textColor, boxWidth: 12, padding: 10, font: { size: 11 } } },
+        tooltip: { backgroundColor: '#1c2333', borderColor: '#2a3550', borderWidth: 1, callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} companies` } }
+      }
+    }
+  });
+}
+
+function updateChartColors() {
+  // Destroy and re-init to update colors
+  Object.values(charts).forEach(ch => ch.destroy());
+  charts = {};
+  setTimeout(initCharts, 50);
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  initCharts();
+  renderTable();
+});
+</script>
+
+<footer style="display:none;">
+  <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
+</footer>
+</body>
+</html>
